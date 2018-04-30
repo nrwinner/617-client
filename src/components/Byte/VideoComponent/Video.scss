@@ -1,0 +1,58 @@
+@import 'src/_vars.scss';
+
+.video {
+    background: white;
+    border-radius: 6px;
+    
+    iframe {
+        display: block;
+        margin: auto;
+    }
+
+    .placeholder {
+        margin: auto;
+        background-size: cover;
+        background-position: center;
+        width: 800px;
+        height: 450px;
+        position: relative;
+        cursor: pointer;
+
+        &:hover {
+
+            &:before, &:after {
+                transform: scale(1.07);
+            }
+        }
+
+        &:before, &:after {
+            opacity: 1 !important;
+            content: '';
+            position: absolute;
+            top: 0; left: 0px; right: 0; bottom: 0;
+            margin: auto;
+            transition: all 0.2s ease;
+            transform: scale(1);
+        }
+
+        &:before {
+            // play button icon
+            background: white;
+            z-index: 3;
+            mask: url('../../../assets/images/play-button.svg') no-repeat center;
+            -webkit-mask: url('../../../assets/images/play-button.svg') no-repeat center;
+            height: 40px; width: 40px;
+            left: 6px
+        }
+
+        &:after {
+            // play button
+            border-radius: 50%;
+            height: 90px; width: 90px;
+            background: $highlight-gradient;
+            border: 5px solid white;
+            box-shadow: 0px 0px 12px 4px rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+    }
+}

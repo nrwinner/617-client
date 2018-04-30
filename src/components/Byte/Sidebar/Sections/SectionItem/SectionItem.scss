@@ -1,0 +1,54 @@
+@import 'src/_vars.scss';
+
+.section-item {
+    padding: 15px 20px;
+    font-weight: lighter;
+    cursor: pointer;
+    opacity: 0.7;
+    position: relative;
+
+    &:after {
+        font-family: 'Font Awesome 5 Pro';
+        position: absolute;
+        right: 20px;
+    }
+
+    &:not(.complete):not(.active):not(.disabled):hover {
+        color: $highlight;
+        opacity: 1;
+    }
+
+    &.complete {
+        color: rgba(255, 255, 255, 0.6);
+        background: #229252;
+        border-top-color: transparent;
+        cursor: default;
+
+        &.active {
+            color: white;
+        }
+
+        &:after {
+            content: '\f058' !important;
+        }
+    }
+
+    &.active {
+        background: $highlight-gradient;
+        cursor: default;
+        opacity: 1;
+
+        &:after {
+            content: '\f054';
+        }
+    }
+
+    &.disabled {
+        opacity: 0.3;
+        cursor: default !important;
+
+        &:after {
+            content: '\f30d';
+        }
+    }
+}

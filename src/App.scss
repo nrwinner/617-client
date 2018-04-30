@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
+@import '_vars.scss';
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.btn-margin {
+  margin: 7px 3px;
+}
+
+.brand-button {
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+} 
+
+// Overrides
+.navbar {
+  margin-bottom: 0;
+}

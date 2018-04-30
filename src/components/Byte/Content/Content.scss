@@ -1,0 +1,11 @@
+@import 'src/_vars.scss';
+
+.content {
+    flex-grow: 2;
+    text-align: left;
+    width: 100%;
+    color: white;
+    background: $byte-bg;
+    box-sizing: border-box;
+    padding: 20px;
+}

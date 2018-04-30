@@ -1,0 +1,126 @@
+@import 'src/_vars.scss';
+
+.quiz-wrapper {
+    margin-top: 20px;
+    position: relative;
+    padding: 40px 20px;
+    background: white;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 4px;
+
+    .quiz-title {
+        font-size: 36px;
+        color: $highlight;
+        font-weight: lighter;
+        margin-bottom: 20px;
+    }
+
+    .quiz-options {
+        color: $highlight;
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: center;
+        border: 1px solid $highlight;
+        overflow: hidden;
+        border-radius: 2px;
+        
+        .question-option {
+            cursor: pointer;
+            padding: 15px 20px;
+            text-align: center;
+            transition: all 0.2s ease;
+            position: relative;
+
+            &:not(:last-child) {
+                border-right: 1px solid $highlight;
+            }
+
+            &:hover {
+                $n: desaturate(lighten($highlight, 30), 0);
+                background: rgba(red($n), green($n), blue($n), 0.2);
+            }
+
+            &.active {
+                background: $highlight-gradient;
+                color: white;
+            }
+        }
+    }
+
+    .good-progress-bar {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 40px;
+
+        .progress-tick {
+            background: rgba(0, 0, 0, 0.2);
+            width: 15px;
+            height: 6px;
+            margin-right: 20px;
+            position: relative;
+
+            &:not(:last-child) {
+                margin-right: 10px;
+            }
+
+            &.answered {
+                background: $highlight;
+            }
+
+            &.active {
+
+                &:after {
+                    content: '';
+                    background: transparent;
+                    width: 23px;
+                    height: 14px;
+                    position: absolute;
+                    left: -4px;
+                    top: -4px;
+                    z-index: 0;
+                    border: 2px solid darken($highlight, 5);
+                }
+            }
+        }
+    }
+
+    .arrow {
+        position: absolute;
+        top: 0; right: 20px; bottom: 0;
+        height: 45px;
+        width: 45px;
+        background: transparent;
+        margin: auto;
+        border-radius: 3px;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-self: center;
+        cursor: pointer;
+
+        &:before {
+            content: '\f054';
+            font-family: 'Font Awesome 5 Pro';
+            color: $highlight;
+        }
+
+        &:hover {
+            background: $highlight-gradient;
+            
+            &:before {
+                color: white;
+            }
+        }
+
+        &.regress {
+            right: auto;
+            left: 20px;
+
+            &:before {
+                transform: rotate(180deg);
+            }
+        }
+    }
+}

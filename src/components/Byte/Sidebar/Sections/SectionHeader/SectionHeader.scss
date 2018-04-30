@@ -1,0 +1,33 @@
+.section-header {
+
+    .byte-image {
+        max-width: 350px;
+        position: relative;
+        margin: 20px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.2);
+        background-image: url(https://udemy-images.udemy.com/course/240x135/602084_c221.jpg);
+        background-size: cover;
+        background-position: center;
+
+
+        &:after {
+            content: '';
+            display: block;
+            padding-top: 100%;
+        }
+    }
+}
+
+.title {
+    font-weight: bold;
+    text-align: center;
+    font-size: 20px;
+}
+
+.user {
+    text-align: center;
+    margin-bottom: 20px;
+    opacity: 0.8;
+}
