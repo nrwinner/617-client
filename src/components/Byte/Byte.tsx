@@ -20,7 +20,7 @@ type Props = {
 
 const Byte = (props: Props) => {
   let query = `query {
-        byte(id: "1") {
+        byte(id: "5ae37ed5f6ef140a75f137a6") {
           id, 
           name,
           description,

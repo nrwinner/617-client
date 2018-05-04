@@ -3,7 +3,7 @@ import * as React from 'react'
 // TODO add cancel button to invitations list item
 // TODO add + button to card-header to open an invitation form (email address input/ submit button)
 
-const InvitationsContainer = (invitations: any) => {
+const InvitationsContainer = ({ invitations }: {invitations: any}) => {
   return (
     <div className="invitations card">
       <div className="card-header">

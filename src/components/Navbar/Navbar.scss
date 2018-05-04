@@ -1,0 +1,19 @@
+@import 'src/_vars.scss';
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 60px;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    background: white;
+    align-items: center;
+
+    .navbar-title {
+        color: $highlight;
+        font-weight: bold;
+        font-size: 26px;
+    }
+}

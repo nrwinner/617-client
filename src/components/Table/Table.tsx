@@ -5,13 +5,24 @@ import InvitationsContainer from './containers/Invitations';
 import { MembersContainer } from './containers/Members';
 import TableHero from './containers/Hero';
 
+import Popup from '../Popup/Popup'
+
 import './Table.scss';
 
-export default class Table extends React.Component<{}> {
-  data: any;
+type Props = {
 
-  constructor() {
-    super({});
+}
+
+type State = {
+  addMembersPopup: boolean
+}
+
+export default class Table extends React.Component<Props> {
+  data: any;
+  state: State
+
+  constructor(props: Props) {
+    super(props);
     this.data = {
       "table": {
         "owner": {
@@ -42,6 +53,7 @@ export default class Table extends React.Component<{}> {
         ],
         "members": [
           {
+            "id": "2",
             "name": "Jane Doe",
             "mealsCompleted": [
               {
@@ -53,18 +65,41 @@ export default class Table extends React.Component<{}> {
         ]
       }
     }
+
+    this.state = {
+      addMembersPopup: false
+    }
+
+    this.toggleAddMembersPopup = this.toggleAddMembersPopup.bind(this);
+  }
+
+  toggleAddMembersPopup() {
+    let c = this.state.addMembersPopup;
+    this.setState({
+      addMembersPopup: !c
+    })
+  }
+
+  resetMembers(m: Array<any>) {
+    // TODO query here
+    console.log(this.data);
+    this.data['table']['members'] = m
   }
 
   render() {
     return (
-      <div className='table'>
-        <TableHero owner={this.data.table.owner.name} />
-        <div className="contents">
-          <section className="viewport">
-            <MealsContainer meals={this.data.table.meals} />
-            <InvitationsContainer invitations={this.data.table.invitations} />
-            <MembersContainer members={this.data.table.members} />
-          </section>
+      <div>
+        <Popup open={this.state.addMembersPopup} data={{respond: this.resetMembers, checked: this.data.table.members.map((m: any) => {return {id: m.id, name: m.name}})}} type="ADD_MEMBERS" close={this.toggleAddMembersPopup} />
+        <div className='table'>
+          <TableHero owner={this.data.table.owner.name} />
+          <div className="contents">
+            <section className="viewport">
+              <MealsContainer meals={this.data.table.meals} />
+              <InvitationsContainer invitations={this.data.table.invitations} />
+              <div className="add-members" onClick={this.toggleAddMembersPopup}>Bruhh</div>
+              <MembersContainer members={this.data.table.members} />
+            </section>
+          </div>
         </div>
       </div>
     );

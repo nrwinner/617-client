@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-export function MembersContainer(members: any) {
+export function MembersContainer({ members }: { members: Array<any> }) {
   return (
     <div className="members card">
       <div className="card-header">

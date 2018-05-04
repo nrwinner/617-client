@@ -4,7 +4,7 @@ import Sections from './Sections/Sections';
 import './Sidebar.scss';
 
 // Types
-import { SectionType, SectionItemType } from '@/types';
+import { SectionType, SectionItemType, UserType } from '@/types';
 
 // Redux
 import { byteChangeSection } from '@/redux-actions';
@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 
 type Props = {
     sections: Map<string, SectionType>;
-    creator: string;
+    creator: UserType;
     name: string;
     changeSection: any;
 }

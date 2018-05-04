@@ -1,0 +1,115 @@
+@import 'src/_vars.scss';
+
+.auth-component {
+    background: white;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    padding: 120px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 20px;
+
+    &:after {
+        content: '';
+        height: 250vh;
+        width: 100vh;
+        right: -55vh;
+        position: fixed;
+        background: $highlight;
+        top: -100vh;
+        transform: rotate(25deg);
+    }
+
+    .auth-main-title {
+        color: lighten($highlight, 50);
+        color: lighten($highlight, 50);
+        text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8);
+        font-weight: bold;
+        font-size: 60px;
+        z-index: 2;
+        text-align: center;
+    }
+
+    .auth-title {
+        font-weight: bold;
+        color: #1a1a1a;
+        font-size: 28px;
+        display: inline;
+        position: relative;
+        padding-left: 20px;
+
+        &:after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: $highlight;
+            position: absolute;
+            left: 0;
+            bottom: 5px;;
+        }
+    }
+
+    .form {
+        max-width: 400px;
+        margin-top: 40px;
+
+        input {
+            outline: 0;
+            font-size: 15px;
+            padding: 10px;
+            box-sizing: border-box;
+            width: 100%;
+            margin-bottom: 15px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 2px;
+            outline: 0;
+
+            &:focus {
+                border-color: $highlight;
+                box-shadow: 0px 0px 2px 1px rgba(red($highlight), green($highlight), blue($highlight), 0.2);
+            }
+        }
+
+        .button-group {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            align-items: center;
+            color: rgba(0, 0, 0, 0.4);
+
+            .action {
+                font-size: 16px;
+                margin-left: 7px;
+            }
+
+            span {
+                cursor: pointer;
+                color: $highlight;
+                
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            .button {
+                background: $highlight-gradient;
+                color: white;
+                padding: 12px 32px;
+                border-radius: 2px;
+                font-size: 16px;
+                text-align: center;
+                cursor: pointer;
+                box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
+
+                &:hover {
+                    background: white;
+                    color: $highlight;
+                }
+            }
+        }
+    }
+}

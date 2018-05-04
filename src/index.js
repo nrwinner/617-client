@@ -1,18 +1,22 @@
 import ReactDOM from 'react-dom';
 import * as React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 
+import { api } from './routes';
+
 // Apollo
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "react-apollo";
+import ApolloClient from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloProvider } from 'react-apollo';
+import { createHttpLink } from "apollo-link-http";
 
 // Redux
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { appReducer } from './reducers'
 
-const store = createStore(appReducer);
+// React-Cookie
+import { CookiesProvider } from 'react-cookie';
+
+import store from './store';
 
 if (module.hot) {
     console.log("in module.hot");
@@ -21,21 +25,25 @@ if (module.hot) {
         store.replaceReducer(nextRootReducer)
     });
 }
+const link = createHttpLink({uri: api, credentials: 'include'});
 
+const client = new ApolloClient({
+    link,
+    cache: new InMemoryCache()
+});
 
 
 const root = document.getElementById('root');
-const client = new ApolloClient({
-    uri: "http://localhost:4000"
-});
 
 if (root) {
     ReactDOM.render(
-        <Provider store={store}>
-            <ApolloProvider client={client}>
-                <App />
-            </ApolloProvider>
-        </Provider>
+        <CookiesProvider>
+            <Provider store={store}>
+                <ApolloProvider client={client}>
+                    <App />
+                </ApolloProvider>
+            </Provider>
+        </ CookiesProvider>
     , root);
 } else {
     // error handling

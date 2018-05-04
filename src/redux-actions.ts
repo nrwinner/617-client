@@ -36,3 +36,20 @@ export function selectQuestionOption(section: string, question: string, option: 
         option: option
     }
 }
+
+export const INIT_USER = 'INIT_USER';
+
+export function initUser(userData: any) {
+    return {
+        type: INIT_USER,
+        data: userData
+    }
+}
+
+export const LOGOUT_USER = 'LOGOUT_USER';
+
+export function logoutUser() {
+    return {
+        type: LOGOUT_USER
+    }
+}

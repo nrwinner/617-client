@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-const MealsContainer = (meals: any) => {
+const MealsContainer = ({ meals }: { meals: Array<any> }) => {
   return (
     <div className="meals card">
       <div className="card-header">

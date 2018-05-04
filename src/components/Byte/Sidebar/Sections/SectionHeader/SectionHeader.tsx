@@ -15,7 +15,7 @@ const SectionHeader = (props: Props) => {
                 <div className="byte-image"></div>
             </div>
             <div className="title">{ props.title }</div>
-            <div className="user">
+            <div className="owner">
                 { props.user.name }
             </div>
         </div>

@@ -1,9 +1,10 @@
-import { Action } from '@/redux-actions';
+import { Action, INIT_USER, LOGOUT_USER } from '@/redux-actions';
 import { BYTE_CHANGE_SECTION, INIT_CONSUMABLE_BYTE, SELECT_QUESTION_OPTION } from '@/redux-actions'
 import { UserType, ByteType, SectionType, QuestionType, QuestionOptionType } from '@/types'
 
 type State = {
     consumingByte?: ByteType;
+    currentUser?: UserType;
 }
 
 const initialState: State = {};
@@ -50,6 +51,14 @@ export function appReducer(state: any = initialState, action: Action) {
 
             console.log(s);
             
+            return s;
+
+        case INIT_USER:
+            return smash(state, {currentUser: {id: action.data.id, name: action.data.name}});
+        case LOGOUT_USER:
+            let s = assign(state);
+            s.currentUser = undefined;
+            console.log(s);
             return s;
 
         default:
