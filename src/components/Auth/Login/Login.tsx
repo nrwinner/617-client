@@ -5,6 +5,7 @@ import history from '../../../history';
 type State = {
     email: string;
     password: string;
+    [key: string]: string;
 }
 
 class Login extends React.Component<{ respond: Function }> {
@@ -17,6 +18,13 @@ class Login extends React.Component<{ respond: Function }> {
             email: '',
             password: ''
         }
+    }
+
+    update(property: string, value: string) {
+        let s: State = this.state;
+        s[property] = value;
+        
+        this.setState(s);
     }
 
     respond() {
@@ -34,10 +42,10 @@ class Login extends React.Component<{ respond: Function }> {
                 <div className="auth-title">Login!</div>
                 <div className="form">
                     <input name="email" type="text" placeholder="Email address" value={this.state.email} onChange={(e) => {
-                        this.setState({email: e.target.value })
+                        this.update('email', e.target.value);
                     }} />
                     <input name="password" type="password" placeholder="Password" value={this.state.password} onChange={(e) => {
-                        this.setState({password: e.target.value })
+                        this.update('password', e.target.value);
                     }} />
                     <div className="button-group">
                         <div className="action"> or <span onClick={() => history.replace('register')}>Create an account!</span></div>

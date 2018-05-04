@@ -9,7 +9,10 @@ import './Auth.scss';
 import Login from './Login/Login';
 import Register from './Register/Register';
 
-class AuthComponent extends React.Component {
+import { initUser } from '@/redux-actions';
+import { connect } from 'react-redux';
+
+class AuthComponent extends React.Component<{ setUser: Function } > {
 
     constructor(props: any) {
         super(props);
@@ -20,6 +23,8 @@ class AuthComponent extends React.Component {
 
     login({ email, password }: { email: string, password: string }) {
         axios.post(routes.login, { email, password }, { withCredentials: true }).then(res => {
+            // FIXME: This should set the user object that's returned from the API
+            this.props.setUser('Nick' + ' ' + 'Winner', '5');
             history.push('/home');
         }, error => {
             alert('An error occured!');
@@ -29,24 +34,32 @@ class AuthComponent extends React.Component {
 
     register({ firstname, lastname, email, password }: { firstname: string, lastname: string, email: string, password: string }) {
         axios.post( routes.register, {firstname, lastname, email, password } , { withCredentials: true } ).then(res => {
+            // FIXME: This should set the user object that's returned from the API
+            this.props.setUser(firstname + ' ' + lastname, '5');
             history.push('/home');
         }, error => {
             alert('An error occured!');
             console.log(`Error: ${error}`)
         })
-    }
+    } 
     
     render() {
         return (
             <div>
-                <div className="auth-component">
-                    <Redirect exact path="/" to={'/auth/login'} />
-                    <Route path="/auth/register" render={(props: any) => <Register respond={this.register} {...props} />} />
-                    <Route path="/auth/login" render={(props: any) => <Login respond={this.login} {...props} />} />
-                </div>
+                <Router history={history}>
+                    <div className="auth-component">
+                        <Redirect exact path="/" to={'/auth/login'} />
+                        <Route path="/auth/login" render={(props: any) => <Login respond={this.login} {...props} />} />
+                        <Route path="/auth/register" render={(props: any) => <Register respond={this.register} {...props} />} />
+                    </div>
+                </Router>
             </div>
         )
     }
 }
 
-export default AuthComponent;
+const mapDispatchToProps = (dispatch: any) => ({
+    setUser: (name: string, id: string) => dispatch(initUser({ name, id }))
+})
+
+export default connect(null, mapDispatchToProps)(AuthComponent);

@@ -14,9 +14,14 @@ class Navbar extends React.Component<{ loggedIn: boolean, user: UserType }> {
     render() {
         return (
             <div className="navbar">
-                <div className="navbar-title">SoftwareBytes</div>
-                <div className="right">
-                    This all goes on the right
+                <div className="grid-inner">
+                    <div className="navbar-title">SoftwareBytes</div>
+                    <div className="right">
+                        { this.props.user &&  <span>Hey there, { this.props.user.name.split(' ')[0] }!</span> }
+                        
+                        {/* TODO: Implement a logout feature */}
+                        <div className="button">Logout</div>
+                    </div>
                 </div>
             </div>
         );

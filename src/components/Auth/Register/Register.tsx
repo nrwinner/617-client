@@ -26,6 +26,13 @@ class Register extends React.Component<{ respond: Function }> {
         }
     }
 
+    update(property: string, value: string) {
+        let s: State = this.state;
+        s[property] = value;
+        
+        this.setState(s);
+    }
+
     respond() {
         let empty = Object.keys(this.state).map((k: string) => this.state[k]).filter((l: string) => l === '');
 
@@ -54,19 +61,19 @@ class Register extends React.Component<{ respond: Function }> {
                     <div className="auth-title">Register!</div>
                     <div className="form">
                         <input name="first" type="text" placeholder="First name" value={this.state.firstname} onChange={(e) => {
-                            this.setState({firstname: e.target.value })
+                            this.update('firstname', e.target.value);
                         }} />
                         <input name="last" type="text" placeholder="Last name" value={this.state.lastname} onChange={(e) => {
-                            this.setState({lastname: e.target.value })
+                            this.update('lastname', e.target.value);
                         }} />
                         <input name="email" type="text" placeholder="Email address" value={this.state.email} onChange={(e) => {
-                            this.setState({email: e.target.value })
+                            this.update('email', e.target.value);
                         }} />
                         <input name="password" type="password" placeholder="Password" value={this.state.password} onChange={(e) => {
-                            this.setState({password: e.target.value })
+                            this.update('password', e.target.value);
                         }} />
                         <input name="passwordVerify" type="password" placeholder="Verify password" value={this.state.passwordVerify} onChange={(e) => {
-                            this.setState({passwordVerify: e.target.value })
+                            this.update('passwordVerify', e.target.value);
                         }} />
                         <div className="button-group">
                             <div className="action"> or <span onClick={() => history.replace('login')}>already have an account? Login!</span></div>

@@ -8,12 +8,17 @@ import Home from './components/Home/Home';
 import Table from './components/Table/Table';
 import history from './history';
 
+import Navbar from './components/Navbar/Navbar';
+
+import { connect } from 'react-redux';
+import { initUser } from '@/redux-actions';
+
 type State = {
   loggedIn: boolean;
 }
 
 
-class App extends React.Component {
+class App extends React.Component<{ setUser: Function }> {
   state: State;
 
   constructor(props: any) {
@@ -23,11 +28,17 @@ class App extends React.Component {
       loggedIn: new Cookies().get('presence') ? true : false
     }
 
+    if (this.state.loggedIn) {
+      // FIXME this is just wrong
+      props.setUser('Nick Winner', '5')
+    }
+
   }
 
   render() {
     return (
       <div>
+        <Navbar />
         <Router history={history}>
           <div>
             <Redirect exact path="/" to="/home" />
@@ -42,4 +53,9 @@ class App extends React.Component {
     );
   }
 }
-export default App;
+
+const mapDispatchToProps = (dispatch: any) => ({
+  setUser: (name: string, id: string) => dispatch(initUser({ name, id }))
+})
+
+export default connect(null, mapDispatchToProps)(App);
