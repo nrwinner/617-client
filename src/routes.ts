@@ -5,7 +5,8 @@ const users = apiBase + '/users'
 
 const routes = {
     register: users,
-    login: users + '/tokens'
+    login: users + '/tokens',
+    validateToken: users + '/tokens',
 }
 
 export default routes;

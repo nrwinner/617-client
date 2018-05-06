@@ -9,8 +9,10 @@ export interface ByteType {
 }
 
 export interface UserType {
-    id: string;
-    name: string;
+    id?: string;
+    firstname: string;
+    lastname: string;
+    email: string;
 }
 
 export interface VideoType {

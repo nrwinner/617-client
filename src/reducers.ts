@@ -54,11 +54,10 @@ export function appReducer(state: any = initialState, action: Action) {
             return s;
 
         case INIT_USER:
-            return smash(state, {currentUser: {id: action.data.id, name: action.data.name}});
+            return smash(state, {currentUser: action.data});
         case LOGOUT_USER:
             let s = assign(state);
             s.currentUser = undefined;
-            console.log(s);
             return s;
 
         default:

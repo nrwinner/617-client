@@ -1,0 +1,14 @@
+@import 'src/_vars.scss';
+
+.banner {
+    margin: auto;
+    padding: 20px 0px;
+
+    .banner-title {
+        font-weight: bold;
+    }
+
+    .banner-text {
+        font-weight: normal;
+    }
+}

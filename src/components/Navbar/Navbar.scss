@@ -6,6 +6,7 @@
     box-sizing: border-box;
     box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
     background: white;
+    color: $dark-text;
 
     .grid-inner {
         display: flex;
@@ -13,16 +14,32 @@
         justify-content: space-between;
         align-items: center;
         height: 100%;
+        padding: 0px 20px;
+        box-sizing: border-box;
     }
 
     .navbar-title {
-        color: $highlight;
+        font-size: 24px;
         font-weight: bold;
-        font-size: 26px;
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        align-items: center;
+        cursor: pointer;
+
+
+        .navbar-logo {
+            mask: url('../../../src/assets/images/logo.svg') no-repeat center;
+            -webkit-mask: url('../../../src/assets/images/logo.svg') no-repeat center;
+            background: $highlight-gradient;
+            width: 30px;
+            height: 100%;
+            transform: rotate(45deg);
+            margin-right: 5px;
+        }
     }
 
     .right {
-        color: #3A3A3A;
         display: flex;
         flex-direction: row;
         justify-content: flex-end;

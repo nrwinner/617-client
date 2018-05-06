@@ -2,10 +2,12 @@ import * as React from 'react';
 import { UserType } from '@/types';
 
 import './Navbar.scss';
-
 import { connect } from 'react-redux';
 
-class Navbar extends React.Component<{ loggedIn: boolean, user: UserType }> {
+import history from '@/history';
+import UserInjector from '../../UserInjector';
+
+class Navbar extends UserInjector<{}> {
     
     constructor(props: any) {
         super(props);
@@ -15,9 +17,12 @@ class Navbar extends React.Component<{ loggedIn: boolean, user: UserType }> {
         return (
             <div className="navbar">
                 <div className="grid-inner">
-                    <div className="navbar-title">SoftwareBytes</div>
+                    <div className="navbar-title" onClick={() => history.push('home')}>
+                        <div className="navbar-logo"></div>
+                        SoftwareBytes
+                    </div>
                     <div className="right">
-                        { this.props.user &&  <span>Hey there, { this.props.user.name.split(' ')[0] }!</span> }
+                        {this.props.user &&  <span>Hey there, { this.props.user.firstname }!</span> }
                         
                         {/* TODO: Implement a logout feature */}
                         <div className="button">Logout</div>
@@ -28,8 +33,4 @@ class Navbar extends React.Component<{ loggedIn: boolean, user: UserType }> {
     }
 }
 
-const mapStateToProps = (state: any) => ({
-    user: state.currentUser
-})
-
-export default connect(mapStateToProps, null)(Navbar);
+export default Navbar;

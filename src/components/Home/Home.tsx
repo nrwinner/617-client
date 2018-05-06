@@ -4,13 +4,15 @@ import { initUser } from '@/redux-actions';
 import { connect } from 'react-redux';
 import InvitationsContainer from '../Table/containers/Invitations';
 import history from '@/history';
+import { Loader } from '../Loader/Loader';
 
-type Props = {
-  loggedIn?: boolean;
-  userLoggedIn: boolean;
-}
+import Banner from './components/Banner/Banner';
+import { UserType } from 'types';
 
-class Home extends React.Component<Props> {
+import UserInjector from '../../UserInjector';
+
+
+class Home extends UserInjector<{}> {
   data: any;
 
   constructor(props: any) {
@@ -50,29 +52,19 @@ class Home extends React.Component<Props> {
    * @memberof Home
    */
   renderUserHome() {
+    console.log('PROPS', this.props);
     return (
       <div className="home-wrapper">
-        <div onClick={() => history.push('table')}>Table</div>
-        <div onClick={() => history.push('auth')}>Auth</div>
-        <div onClick={() => history.push('byte')}>Byte</div>
+        <Banner title={'Welcome back, ' + this.props.user.firstname} text={'We\'re happy you\'re here!'} />
       </div>
     )
   }
 
   render() {
-    if (this.props.loggedIn || this.props.userLoggedIn) {
       return this.renderUserHome()
-    } else {
-      history.push('auth');
-      return null;
-    }
   }
-
-  
 }
 
-const mapStateToProps = (state: any) => ({
-  userLoggedIn: state.currentUser ? true : false
-})
+  
 
-export default connect(mapStateToProps, null)(Home);
+export default Home;
