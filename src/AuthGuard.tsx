@@ -67,7 +67,7 @@ class AuthGuard extends React.Component<{component: JSX.Element, currentUser: Us
 
     goToLogin() {
         if (history.location.pathname.split('/')[1] !== 'auth') {
-            history.push('auth');
+            history.push('/auth');
         }
     }
 

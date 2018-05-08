@@ -40,6 +40,7 @@ const Byte = (props: Props) => {
               videoIn,
               videoOut,
               questions {
+                  index,
                   text,
                   answerId,
                   options {
@@ -60,7 +61,7 @@ const Byte = (props: Props) => {
         if (loading) return <Loader text="Loading byte..." />;
         if (error) return <p>Error :( {error}</p>;
 
-          console.log('DATA', data);
+        console.log('DATA', data);
 
         props.initByte(data);
 

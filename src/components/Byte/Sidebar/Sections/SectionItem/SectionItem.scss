@@ -11,6 +11,9 @@
         font-family: 'Font Awesome 5 Pro';
         position: absolute;
         right: 20px;
+        top: 0; bottom: 0;
+        height: 16px;
+        margin: auto;
     }
 
     &:not(.complete):not(.active):not(.disabled):hover {
