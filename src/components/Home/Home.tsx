@@ -2,7 +2,6 @@ import * as React from 'react';
 import { initUser } from '@/redux-actions';
 
 import { connect } from 'react-redux';
-import InvitationsContainer from '../Table/containers/Invitations';
 import history from '@/history';
 import { Loader } from '../Loader/Loader';
 
@@ -10,6 +9,11 @@ import Banner from './components/Banner/Banner';
 import { UserType } from 'types';
 
 import UserInjector from '../../UserInjector';
+
+import DashCard from '../DashCard/DashCard';
+import Invitations from './components/Invitations/Invitations';
+
+import './Home.scss';
 
 
 class Home extends UserInjector<{}> {
@@ -42,6 +46,13 @@ class Home extends UserInjector<{}> {
             }
           ]
         }
+      ],
+      invitations: [
+        {
+          date: '5/6/2018',
+          host: 'Sean Donnelly',
+          name: 'COSC 617: Advanced Web Development'
+        }
       ]
     }
   }
@@ -52,10 +63,19 @@ class Home extends UserInjector<{}> {
    * @memberof Home
    */
   renderUserHome() {
-    console.log('PROPS', this.props);
     return (
       <div className="home-wrapper">
-        <Banner title={'Welcome back, ' + this.props.user.firstname} text={'We\'re happy you\'re here!'} />
+        { this.props.user && <Banner title={'Welcome back, ' + this.props.user.firstname} text={'We\'re happy you\'re here!'} /> }
+        <div className="grid-inner">
+          <div className="home-top-grid">
+            <DashCard title={'Invitations'}>
+              <Invitations invitations={this.data.invitations} />
+            </DashCard> 
+            <DashCard title={'Tables'}>
+              
+            </DashCard>
+          </div>
+        </div>
       </div>
     )
   }

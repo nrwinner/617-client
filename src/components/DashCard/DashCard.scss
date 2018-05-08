@@ -1,0 +1,44 @@
+@import 'src/_vars.scss';
+
+.dash-card {
+    background: white;
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    box-sizing: border-box;
+    position: relative;
+
+    .dash-card-title {
+        font-weight: bold;
+        color: $dark-text;
+        padding: 20px;
+
+    }
+
+    .dash-card-content {
+        padding: 20px;
+        padding-top: 0px;
+    }
+
+    .dash-card-badge {
+        position: absolute;
+        background: darken($highlight, 10);
+        border-radius: 4px;
+        color: white;
+        padding: 3px;
+        font-size: 12px;
+        max-width: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        right: 20px;
+        top: 20px;
+        opacity: 0.7;
+        
+        &:before {
+            content: '';
+            display: block;
+            padding-bottom: 100%;
+        }
+    }
+}

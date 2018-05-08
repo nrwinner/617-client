@@ -78,7 +78,7 @@ class AddMembers extends React.Component<Props> {
                     <div className="users">
                         {data.users.map((m: UserType) => (
                             <div className={'user ' + (this.state.checked.filter(c => c.id === m.id).length ? 'checked' : '')} onClick={() => this.selectUser(m)}>
-                                <span>{m.name}</span>
+                                <span>{m.firstname + ' ' + m.lastname}</span>
                             </div>
                         ))}
                     </div>

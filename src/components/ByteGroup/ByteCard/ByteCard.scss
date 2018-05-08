@@ -1,0 +1,142 @@
+@import 'src/_vars.scss';
+
+.byte-card {
+    width: 220px;
+    min-height: 280px;
+    background: white;
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+
+    &:not(.admin) {
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(1.01);
+            box-shadow: 0px 4px 15px 2px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+    }
+
+    &.new {
+        background: linear-gradient(45deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.04));
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: rgba(0, 0, 0, 0.4); 
+
+        &:before {
+            content: '\f067';
+            font-family: 'Font Awesome 5 Pro';
+            font-size: 40px;
+        }
+
+        &:after {
+            content: 'Add Byte';
+            margin-top: 10px;
+        }
+    }
+
+    &.admin {
+
+        &:hover {
+
+            .byte-admin-popover {
+                opacity: 0.9;
+                transform: scale(1);
+                visibility: visible;
+
+                & > *:not(:first-child) {
+                    margin-right: 20px;
+                }
+
+                div {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .byte-admin-popover {
+        background: $highlight-gradient;
+        opacity: 0.9;
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+        align-items: center;
+        transform: scale(0.7);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease;
+
+        & > *:not(:first-child) {
+            margin-right: -20px;
+            transition: all 0.2s ease;
+            transition-delay: 0.2s;
+        }
+
+        div {
+            opacity: 0;
+            color: white;
+            width: 40px;
+            height: 40px;
+            font-size: 40px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            transition-delay: 0.2s;
+
+            &.byte-remove:after {
+                content: '\f05e';
+                font-family: 'Font Awesome 5 Pro';
+            }
+
+            &.byte-nav:after {
+                content: '\f347';
+                font-family: 'Font Awesome 5 Pro';
+            }
+        }
+    }
+
+    .byte-card-image {
+        height: 130px;
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .byte-card-name {
+        color: $dark-text;
+        padding: 10px;
+        box-sizing: border-box;
+        text-align: left;
+        font-weight: bold;
+        height: 64px;
+    }
+
+    .byte-card-creator {
+        padding: 0px 10px 10px 10px;
+        color: $dark-text;
+        opacity: 0.6;
+        font-size: 14px;
+    }
+
+    .byte-completed {
+        padding: 8px;
+        box-sizing: border-box;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        background: linear-gradient(45deg, darken($green, 7), lighten($green, 7));
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+
+        i {
+            margin-right: 5px;
+        }
+    }
+}

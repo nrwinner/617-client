@@ -15,6 +15,7 @@ type Props = {
     creator: UserType;
     name: string;
     changeSection: any;
+    image: string;
 }
 
 class Sidebar extends React.Component<Props> {
@@ -26,7 +27,7 @@ class Sidebar extends React.Component<Props> {
     render() {
         return (
             <div className='sidebar'>
-               <Sections sections={this.props.sections} user={this.props.creator} title={this.props.name} changeSection={this.props.changeSection} />
+               <Sections sections={this.props.sections} user={this.props.creator} title={this.props.name} changeSection={this.props.changeSection} image={this.props.image} />
             </div>
         );
     }
@@ -35,7 +36,8 @@ class Sidebar extends React.Component<Props> {
 const mapStateToProps = (state: any) => ({
     sections: state.consumingByte.sections,
     creator: state.consumingByte.creator,
-    name: state.consumingByte.name
+    name: state.consumingByte.name,
+    image: state.consumingByte.image
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

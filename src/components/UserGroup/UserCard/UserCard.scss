@@ -1,0 +1,29 @@
+.user-card {
+    display: flex;
+    background: white;
+    border-radius: 2px;
+    padding: 10px;
+    box-sizing: border-box;
+    align-items: center;
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
+
+    .user-card-image {
+        border-radius: 50%;
+        width: 70px;
+        background: url(https://i1.wp.com/grueneroadpharmacy.com/wp-content/uploads/2017/02/user-placeholder-1.jpg?ssl=1);
+        background-size: cover;
+        background-position: center;
+        margin-right: 15px;
+
+        &:after {
+            content: '';
+            display: block;
+            padding-top: 100%;
+        }
+    }
+
+    .user-card-name {
+        font-weight: bold;
+        font-size: 18px;
+    }
+}

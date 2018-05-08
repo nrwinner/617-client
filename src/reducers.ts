@@ -15,53 +15,56 @@ const initialState: State = {};
  * @param action 
  */
 export function appReducer(state: any = initialState, action: Action) {
-    switch (action.type) {
-        case BYTE_CHANGE_SECTION:
-            let s = assign(state);
+    if (action.type === BYTE_CHANGE_SECTION) {
+        let s = assign(state);
             s.consumingByte.activeSection = action.id;
             return s;
 
-        case INIT_CONSUMABLE_BYTE:
-            let s = assign(state);
+    } else if (action.type === INIT_CONSUMABLE_BYTE) {
+        let s = assign(state);
             s.consumingByte = smash(buildByte(action.data), { activeSection: action.data.sections[0].id });
             return assign(s);
 
-        case SELECT_QUESTION_OPTION:
-            let s = assign(state); // dup state
+    } else if (action.type === SELECT_QUESTION_OPTION) {
+        let s = assign(state); // dup state
 
-            let questions: Map<string, QuestionType> = new Map(s.consumingByte.sections.get(action.section).questions);
-            let q: QuestionType = questions.get(action.question);
+        let questions: Map<string, QuestionType> = new Map(s.consumingByte.sections.get(action.section).questions);
+        let q = questions.get(action.question);
+
+        if (typeof q !== 'undefined') {
             q = smash(q, {activeOption: action.option});
-            questions.set(action.question, q); // new question with change
+            questions.set(action.question, q as QuestionType); // new question with change
+        }
 
-            s.consumingByte.sections.get(action.section).questions = questions;
-            
-            let complete = true;
-            for (let i of Array.from(questions.values())) {
-                if (typeof i.activeOption === 'undefined') {
-                    complete = false;
-                    break;
-                }
+        s.consumingByte.sections.get(action.section).questions = questions;
+        
+        let complete = true;
+        for (let i of Array.from(questions.values())) {
+            if (typeof i.activeOption === 'undefined') {
+                complete = false;
+                break;
             }
+        }
 
-            let sections = new Map(s.consumingByte.sections)
-            let section = s.consumingByte.sections.get(action.section);
-            sections.set(action.section, smash(section, {complete: complete}));
-            s.consumingByte.sections = sections;
+        let sections = new Map(s.consumingByte.sections)
+        let section = s.consumingByte.sections.get(action.section);
+        sections.set(action.section, smash(section, {complete: complete}));
+        s.consumingByte.sections = sections;
 
-            console.log(s);
-            
-            return s;
+        console.log(s);
+        
+        return s;
 
-        case INIT_USER:
-            return smash(state, {currentUser: action.data});
-        case LOGOUT_USER:
-            let s = assign(state);
-            s.currentUser = undefined;
-            return s;
+    } else if (action.type === INIT_USER) {
+        return smash(state, {currentUser: action.data});
 
-        default:
-            return state;
+    } else if (action.type === LOGOUT_USER) {
+        let s = assign(state);
+        s.currentUser = undefined;
+        return s;   
+
+    } else {
+        return state;
     }
 }
 
@@ -105,6 +108,7 @@ function buildByte(object: any): ByteType {
 
     b = {
         id: object.id,
+        image: object.image,
         name: object.name,
         description: object.description,
         creator: object.creator,

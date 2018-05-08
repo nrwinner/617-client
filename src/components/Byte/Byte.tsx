@@ -15,13 +15,15 @@ import gql from "graphql-tag";
 import "./Byte.scss";
 
 type Props = {
-  initByte: any,
+  initByte: any;
 }
 
 const Byte = (props: Props) => {
-  let query = `query {
-        byte(id: "5ae37ed5f6ef140a75f137a6") {
+  let id: string = props.match.params.id;
+  let query = gql`query byte($id: String!) {
+        byte(id: $id) {
           id, 
+          image,
           name,
           description,
           date,
@@ -51,9 +53,8 @@ const Byte = (props: Props) => {
 
   return (
     <Query
-      query={gql`
-        ${query}
-      `}
+      query={query}
+      variables={{id}}
     >
       {({ loading, error, data }) => {
         if (loading) return <Loader text="Loading byte..." />;

@@ -1,5 +1,6 @@
 export interface ByteType {
     id: string;
+    image: string;
     name: string;
     description: string;
     creator: UserType;

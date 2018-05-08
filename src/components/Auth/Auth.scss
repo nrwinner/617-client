@@ -9,6 +9,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 20px;
+    z-index: 11;
 
     &:after {
         content: '';
@@ -82,22 +83,6 @@
                 
                 &:hover {
                     text-decoration: underline;
-                }
-            }
-
-            .button {
-                background: $highlight-gradient;
-                color: white;
-                padding: 12px 32px;
-                border-radius: 2px;
-                font-size: 16px;
-                text-align: center;
-                cursor: pointer;
-                box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
-
-                &:hover {
-                    background: white;
-                    color: $highlight;
                 }
             }
         }

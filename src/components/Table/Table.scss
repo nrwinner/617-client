@@ -1,128 +1,135 @@
 @import 'src/_vars.scss';
-.table,
-.meals,
-.invitations,
-.members {
-  background: white;
-  margin-bottom: 25px;
-  width: 100%;
-}
+
 
 .table {
-  background-color: rgb(235, 235, 235);
-  height: 100vh;
-  .nav {
-    width: 100%;
-    height: 60px;
-    background-color: $dark-gradient-blue;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    .logo {
-      color: white;
-      font-size: 22px;
-      font-weight: 700;
-      padding-left: 10px;
+  background-color: $byte-bg;
+
+  .banner {
+    background: linear-gradient(45deg, darken($dark-text, 10), lighten($dark-text, 10));
+  
+    padding-top: 90px;
+    padding-bottom: 90px;
+
+    .banner-title {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 5px;
+    }
+
+    .banner-text {
+      color: lighten($highlight, 45);
+      opacity: 0.7;
     }
   }
-  .hero {
-    background-color: rgba(0, 0, 0, 0.8);
-    width: 100%;
-    height: 30vh;
-    color: whitesmoke;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
+
+  & > .grid-inner {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    position: relative;
+
+    &.nextByte {
+      padding: 0;
+    }
   }
-  .contents {
+
+  .table-bar {
+    padding: 10px 10px 15px;
+    margin-top: -45px;
     display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .table-bar-section {
+      display: flex;
+      flex-direction: r0o;
+      justify-content: flex-start;
+
+      .table-bar-item {
+        color: white;
+        opacity: 0.9;
+        cursor: pointer;
+        position: relative;
+
+        &:hover, &.active {
+
+          &:after {
+            content: '';
+            background: white;
+            height: 6px;
+            width:100%;
+            position: absolute;
+            bottom: -13px;
+            left: 0;
+          }
+        }
+
+        i {
+          margin-right: 7px;
+        }
+
+        &:not(:last-child) {
+          margin-right: 25px;
+        }
+      }
+    }
+  }
+
+  .table-next-byte {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding-top: 50px;
-  }
-  .viewport {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    width: 60vw;
-    max-width: 1080px;
-  }
-}
+    position: absolute;
+    top: 40px; right: 20px;
 
-.meals {
-  .meal-li {
-    display: flex;
-    justify-content: space-between;
-    &.header {
-      margin-bottom: 7px;
-      padding-bottom: 3px;
-      border-bottom: 1px solid rgb(224, 224, 224);
-    }
-    &:not(.header) {
-      margin-bottom: 3px;
-      padding: 4px 8px;
-      background: rgb(250, 250, 250);
-      &:hover {
-        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    .table-next-byte-image {
+      width: 240px;
+      height: 170px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 2px;
+
+      .table-next-byte-name {
+        color: white;
+        font-size: 14px;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 5px;
+        box-sizing: border-box;
+        text-align: center;
+        bottom: 0;
+        position: absolute;
+        width: 100%;
+      } 
+
+      &:before {
+        content: '';
+        background: white;
+        width: 25px;
+        height: 25px;
+        mask: url('../../assets/images/play-button.svg') center no-repeat;
+        -webkit-mask: url('../../assets/images/play-button.svg') center no-repeat;
+        position: absolute;
+        top: 0; bottom: 20px;
+        left: 6px; right: 0;
+        margin: auto;
+        z-index: 2;
+      }
+
+      &:after {
+        content: '';
+        width: 60px;
+        height: 60px;
+        background: rgba(0, 0, 0, 0.7);
+        border-radius: 50%;
+        position: absolute;
+        top: 0; left: 0; bottom: 20px; right: 0;
+        margin: auto;
+        z-index: 1;
       }
     }
-  }
-}
 
-.members {
-  .members-li {
-    display: flex;
-    justify-content: space-between;
-    &.header {
-      margin-bottom: 7px;
-      padding-bottom: 3px;
-      border-bottom: 1px solid rgb(224, 224, 224);
+    a {
+      text-decoration: none;
     }
-    &:not(.header) {
-      padding: 4px 8px;
-      background: rgb(250, 250, 250);
-      &:hover {
-        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-      }
-    }
-  }
-}
-
-.invitations {
-  .invite-li {
-    display: flex;
-    justify-content: space-between;
-    &.header {
-      margin-bottom: 7px;
-      padding-bottom: 3px;
-      border-bottom: 1px solid rgb(224, 224, 224);
-    }
-    &:not(.header) {
-      padding: 4px 8px;
-      background: rgb(250, 250, 250);
-      &:hover {
-        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-      }
-    }
-  }
-}
-
-// Card UI
-.card {
-  /* Add shadows to create the "card" effect */
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  border-radius: 4px;
-  .card-header {
-    padding: 4px 0 6px 12px;
-    background-color: $highlight;
-    h1 {
-      margin: 0;
-    }
-  }
-  .card-content {
-    padding: 16px;
   }
 }
 

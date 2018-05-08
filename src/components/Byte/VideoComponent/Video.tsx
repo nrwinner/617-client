@@ -35,7 +35,7 @@ export default class Video extends Component<Props, State> {
         if (this.state.playing) {
             return (
                 <div className='video'>
-                    <iframe width="800" height="450" src={makeSourceUrl(this.props.source)} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                    <iframe width="800" height="450" src={makeSourceUrl(this.props.source)} frameBorder="0" data-allow="autoplay; encrypted-media" allowFullScreen></iframe>
                 </div>
             )
         } else {

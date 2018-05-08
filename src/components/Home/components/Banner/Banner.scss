@@ -1,14 +1,20 @@
 @import 'src/_vars.scss';
 
 .banner {
+    background: url('../../../../assets/images/lowpoly.png');
+    background-position: center;
+    background-size: cover;
     margin: auto;
-    padding: 20px 0px;
+    color: white;
+    padding: 120px 0px;
+    font-size: 28px;
+    font-weight: lighter;
 
     .banner-title {
-        font-weight: bold;
+        font-weight: 400;
     }
 
     .banner-text {
-        font-weight: normal;
+        font-size: 19px;
     }
 }

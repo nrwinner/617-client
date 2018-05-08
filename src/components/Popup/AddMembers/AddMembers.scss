@@ -31,28 +31,12 @@ input[type=checkbox] {
         align-items: center;
         margin-top: 20px;
     }
-
-    .button {
-        background: $highlight-gradient;
-        color: white;
-        padding: 12px 32px;
-        border-radius: 2px;
-        font-size: 16px;
-        text-align: center;
-        cursor: pointer;
-        box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.1);
-
-        &:hover {
-            background: white;
-            color: $highlight;
-        }
-    }
 }
 
 .users {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-column-gap: 10px;
+    gap: 10px;
 
     .user {
         border-radius: 2px;

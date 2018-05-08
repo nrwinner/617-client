@@ -16,6 +16,7 @@ type Props = {
     title: string;
     active: string;
     changeSection: Function;
+    image: string;
 }
 class Sections extends React.Component<Props> {
     // container
@@ -33,7 +34,7 @@ class Sections extends React.Component<Props> {
     render() {
         return (
             <div className='sections'>
-                <SectionHeader user={this.props.user} title={this.props.title} />
+                <SectionHeader user={this.props.user} title={this.props.title} image={this.props.image} />
                 {
                     Array.from(this.props.sections, ([key, value]) => value).map((v, i) => {
                         let available = v.complete ? true : false;

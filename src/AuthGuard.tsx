@@ -34,17 +34,16 @@ class AuthGuard extends React.Component<{component: JSX.Element, currentUser: Us
             if (this.state.hasCookie) {
                 axios.get(routes.validateToken, {withCredentials: true}).then(res => {
                   let u = res.data as UserType;
-                  this.props.setUser({ firstname: u.firstname, lastname: u.lastname, email: u.email });
+                  console.log(u);
+                  this.props.setUser({ id: u.id, firstname: u.firstname, lastname: u.lastname, email: u.email });
                 }, (error) => {
                     // do nothing, bad token
                     this.setState({
-                        loggedIn: false,
                         queryFinished: true
                     })
                 })
             } else {
                 this.setState({
-                    loggedIn: false,
                     queryFinished: true
                 })
             }
