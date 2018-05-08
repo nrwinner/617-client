@@ -1,5 +1,6 @@
 import * as React from 'react';
 import axios  from 'axios';
+// @ts-ignore
 import { Cookies } from 'react-cookie';
 import { initUser } from '@/redux-actions';
 import { connect } from 'react-redux';

@@ -37,6 +37,15 @@ export function selectQuestionOption(section: string, question: string, option: 
     }
 }
 
+export const COMPLETE_BYTE_SECTION = 'COMPLETE_BYTE_SECTION';
+
+export function completeSection(id: string) {
+    return {
+        type: COMPLETE_BYTE_SECTION,
+        id
+    }
+}
+
 export const INIT_USER = 'INIT_USER';
 
 export function initUser(userData: any) {

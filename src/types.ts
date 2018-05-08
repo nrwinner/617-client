@@ -42,8 +42,9 @@ export interface SectionItemType {
 export interface QuestionType {
     id: string;
     text: string;
-    answerId: number;
+    answerId: string;
     options: Map<string, QuestionOptionType>;
+    activeOption?: string;
     [propName: string]: any;
 }
 

@@ -1,5 +1,5 @@
 import { Action, INIT_USER, LOGOUT_USER } from '@/redux-actions';
-import { BYTE_CHANGE_SECTION, INIT_CONSUMABLE_BYTE, SELECT_QUESTION_OPTION } from '@/redux-actions'
+import { BYTE_CHANGE_SECTION, INIT_CONSUMABLE_BYTE, SELECT_QUESTION_OPTION, COMPLETE_BYTE_SECTION } from '@/redux-actions'
 import { UserType, ByteType, SectionType, QuestionType, QuestionOptionType } from '@/types'
 
 type State = {
@@ -23,7 +23,7 @@ export function appReducer(state: any = initialState, action: Action) {
     } else if (action.type === INIT_CONSUMABLE_BYTE) {
         let s = assign(state);
             s.consumingByte = smash(buildByte(action.data), { activeSection: action.data.sections[0].id });
-            return assign(s);
+            return s;
 
     } else if (action.type === SELECT_QUESTION_OPTION) {
         let s = assign(state); // dup state
@@ -37,23 +37,28 @@ export function appReducer(state: any = initialState, action: Action) {
         }
 
         s.consumingByte.sections.get(action.section).questions = questions;
-        
-        let complete = true;
-        for (let i of Array.from(questions.values())) {
-            if (typeof i.activeOption === 'undefined') {
-                complete = false;
-                break;
-            }
-        }
 
         let sections = new Map(s.consumingByte.sections)
         let section = s.consumingByte.sections.get(action.section);
-        sections.set(action.section, smash(section, {complete: complete}));
+        sections.set(action.section, assign(section));
         s.consumingByte.sections = sections;
-
-        console.log(s);
         
         return s;
+
+    } else if (action.type === COMPLETE_BYTE_SECTION) {
+        let s: State = assign(state);
+        if  (s.consumingByte) {
+            let sections = new Map(s.consumingByte.sections);
+            // @ts-ignore
+            let section: SectionType = sections.get(action.id);
+            if (section) {
+                section.complete = true;
+                sections.set(action.id, section);
+                s.consumingByte.sections = sections;
+                return s;
+            }
+        }
+        return state;
 
     } else if (action.type === INIT_USER) {
         return smash(state, {currentUser: action.data});
@@ -95,7 +100,7 @@ function buildByte(object: any): ByteType {
 
     let sections: Map<string, SectionType> = new Map(object.sections.map((s: any) => {
         let b = Object.assign({}, s);
-        b.questions = new Map(s.questions.map((v: any, i: number) => {
+        b.questions = new Map(s.questions.map((v: any, i: string) => {
             let c = Object.assign({}, v);
             c.options = new Map(v.options.map((o: any) => {
                 return [o.id, o.text]

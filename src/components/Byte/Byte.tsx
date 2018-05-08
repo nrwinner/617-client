@@ -16,6 +16,7 @@ import "./Byte.scss";
 
 type Props = {
   initByte: any;
+  [propName: string]: any;
 }
 
 const Byte = (props: Props) => {

@@ -17,7 +17,7 @@ class Navbar extends UserInjector<{}> {
         return (
             <div className="navbar">
                 <div className="grid-inner">
-                    <div className="navbar-title" onClick={() => history.push('home')}>
+                    <div className="navbar-title" onClick={() => history.push('/home')}>
                         <div className="navbar-logo"></div>
                         SoftwareBytes
                     </div>
