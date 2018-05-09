@@ -4,7 +4,7 @@ import SectionItem from './SectionItem/SectionItem'
 import SectionHeader from './SectionHeader/SectionHeader';
 
 // Types
-import { SectionType, SectionItemType } from '@/types';
+import { SectionType, SectionItemType, UserType } from '@/types';
 
 // Redux
 import { connect } from 'react-redux';
@@ -12,7 +12,7 @@ import { byteChangeSection } from '@/redux-actions';
 
 type Props = {
     sections: Map<string, SectionType>;
-    user: any;
+    user: UserType;
     title: string;
     active: string;
     changeSection: Function;
@@ -25,10 +25,6 @@ class Sections extends React.Component<Props> {
     constructor(props: Props) {
         super(props);
         this.lastCompleted = -1;
-    }
-
-    componentWillReceiveProps(nextProps: any) {
-        console.log('NEW PROPS', nextProps);
     }
 
     render() {

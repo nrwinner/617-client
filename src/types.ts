@@ -1,11 +1,11 @@
 export interface ByteType {
     id: string;
-    image: string;
     name: string;
-    description: string;
     creator: UserType;
-    materials: { youtubeVideo: string };
-    sections: Map<string, SectionType>;
+    image?: string;
+    description?: string;
+    materials?: { youtubeVideo: string };
+    sections?: Map<string, SectionType>;
     [propName: string]: any;
 }
 
@@ -14,6 +14,9 @@ export interface UserType {
     firstname: string;
     lastname: string;
     email: string;
+    bytesCompleted?: ByteType[];
+    tables?: TableType[];
+    invitations?: TableType[];
 }
 
 export interface VideoType {
@@ -51,4 +54,13 @@ export interface QuestionType {
 export interface QuestionOptionType {
     id: number;
     text: string;
+}
+
+export interface TableType {
+    id: string;
+    name: string;
+    owner: UserType;
+    bytes?: ByteType[];
+    invitations?: UserType[];
+    members?: UserType[];
 }

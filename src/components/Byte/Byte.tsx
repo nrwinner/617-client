@@ -29,7 +29,9 @@ const Byte = (props: Props) => {
           description,
           date,
           creator {
-            name
+            id,
+            firstname,
+            lastname
           },
           materials {
             youtubeVideo
@@ -54,15 +56,10 @@ const Byte = (props: Props) => {
       }`;
 
   return (
-    <Query
-      query={query}
-      variables={{id}}
-    >
+    <Query query={query} variables={{id}}>
       {({ loading, error, data }) => {
         if (loading) return <Loader text="Loading byte..." />;
         if (error) return <p>Error :( {error}</p>;
-
-        console.log('DATA', data);
 
         props.initByte(data);
 

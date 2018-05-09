@@ -7,7 +7,7 @@ const ByteCard = ({ byte, completed, admin, makeNew, deleteResponder }: { byte?:
     if (!makeNew && byte) {
         return (
             <div className={'byte-card ' + (completed ? 'completed ' : '') +  (admin ? 'admin ' : '')}>
-                <div className="byte-card-image" style={{backgroundImage: 'url(' + byte.image || null + ')'}}></div>
+                <div className="byte-card-image" style={{backgroundImage: byte.image ? 'url(' + byte.image + ')' : ''}}></div>
                 <div className="byte-card-name">{ truncate(byte.name, 49) }</div>
                 <div className="byte-card-creator">{ byte.creator.firstname + ' ' + byte.creator.lastname }</div>
                 { completed && <div className="byte-completed">

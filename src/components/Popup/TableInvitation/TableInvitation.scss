@@ -1,0 +1,39 @@
+@import 'src/_vars.scss';
+
+.table-invitation {
+    
+    & > *:not(.popup-title) {
+        text-align: center !important;
+    }
+}
+
+.table-invitation-icon {
+    &:after {
+        content: '\f0e0';
+        font-family: 'Font Awesome 5 Pro';
+        color: $highlight;
+        text-align: center;
+        font-size: 120px;
+        font-weight: bold;
+    }
+}
+
+.invitation-text {
+    color: lighten($dark-text, 10);
+    margin-top: 10px;
+
+    span {
+        color: $highlight;
+    }
+}
+
+.btn-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 40px;
+
+    & > *:not(:last-child) {
+        margin-right: 20px;
+    }
+}

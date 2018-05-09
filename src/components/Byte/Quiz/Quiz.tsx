@@ -148,6 +148,7 @@ class Quiz extends React.Component<Props, State> {
 
             // check should complete byte
             let test = Array.from(this.props.allSections, ([key, value]) => value).filter((s: SectionType) => !s.complete).length;
+            alert(test);
             if (test === 0) {
                 // all sections are complete
                 let q = gql`mutation completeByte($byteId: String!, $userId: String!) {

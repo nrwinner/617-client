@@ -6,85 +6,163 @@ import history from '@/history';
 import { Loader } from '../Loader/Loader';
 
 import Banner from './components/Banner/Banner';
-import { UserType } from 'types';
+import { UserType, TableType } from 'types';
 
 import UserInjector from '../../UserInjector';
 
 import DashCard from '../DashCard/DashCard';
 import Invitations from './components/Invitations/Invitations';
+import Tables from  './components/Tables/Tables';
 
 import './Home.scss';
 
+// Apollo
+import { Query, withApollo } from 'react-apollo';
+import gql from 'graphql-tag';
 
-class Home extends UserInjector<{}> {
-  data: any;
+
+import Popup from '@/components/Popup/Popup';
+import ApolloClient from 'apollo-client';
+
+type State = {
+  invitationPopup: boolean;
+  activeInvitation?: TableType;
+  queryData?: any;
+}
+
+type Props = {
+  client: ApolloClient<any>;
+  [propName: string]: any;
+}
+
+class Home extends UserInjector<{ props: Props }> {
+  refetch?: Function;
+  state: State;
+  query: any;
 
   constructor(props: any) {
     super(props);
 
-    this.data = {
-      tables: [
-        {
-          id: '1',
-          host: {
-            name: 'Sean Donnelly'
-          },
-          members: [
-            {
-              name: 'Nick Winner',
-            },
-            {
-              name: 'Shy LaBeef'
-            }
-          ],
-          bytes: [
-            {
-              id: '5ae37ed5f6ef140a75f137a6',
-              name: 'COSC 457 Github Basics',
-              description: 'Learn the basics of version control and applies them to Git',
-              sections: [1, 2, 3, 4, 5, 6, 7]
-            }
-          ]
+    this.query = gql`query user($id: String!) {
+      user(id: $id) {
+        bytesCompleted {
+          id,
+          name,
+          creator {
+            id,
+            firstname,
+            lastname,
+            email,
+          }
+        },
+        tables {
+          id,
+          name,
+          owner {
+            id,
+            firstname,
+            lastname
+          }
+        },
+        invitations {
+          id,
+          name,
+          owner {
+            id,
+            firstname,
+            lastname
+          }
         }
-      ],
-      invitations: [
-        {
-          date: '5/6/2018',
-          host: 'Sean Donnelly',
-          name: 'COSC 617: Advanced Web Development'
-        }
-      ]
+      }
+    }`;
+
+    this.state = {
+      invitationPopup: false,
+    }
+
+    this.invitationClickHandler = this.invitationClickHandler.bind(this);
+    this.invitationResponder = this.invitationResponder.bind(this);
+    this.toggleInvitationPopup = this.toggleInvitationPopup.bind(this);
+  }
+
+  invitationClickHandler(t: TableType) {
+    if (t) {
+      this.setState({
+        activeInvitation: t
+      }, () => {
+        this.toggleInvitationPopup(true);
+      });
+    } else {
+      alert(' you didnt pass anything! ');
     }
   }
 
-  /**
-   * The home page when the client is in the authenticated state.
-   * 
-   * @memberof Home
-   */
-  renderUserHome() {
-    return (
-      <div className="home-wrapper">
-        { this.props.user && <Banner title={'Welcome back, ' + this.props.user.firstname} text={'We\'re happy you\'re here!'} /> }
-        <div className="grid-inner">
-          <div className="home-top-grid">
-            <DashCard title={'Invitations'}>
-              <Invitations invitations={this.data.invitations} />
-            </DashCard> 
-            <DashCard title={'Tables'}>
-              
-            </DashCard>
-          </div>
-        </div>
-      </div>
-    )
+  async invitationResponder(accept: boolean) {
+    if (typeof accept !== 'undefined') {
+
+      if (alert) {
+        let q = gql`mutation joinTable($tableId: String!, $userId: String!) {
+          joinTable(tableId: $tableId, userId: $userId)
+        }`;
+  
+        // @ts-ignore
+        const { data } = await this.props.client.mutate({mutation: q, variables: {
+            tableId: this.state.activeInvitation ? this.state.activeInvitation.id : '',
+            userId: this.props.user ? this.props.user.id : '',
+        }});
+
+        // sanity check
+        if (typeof this.refetch !== 'undefined') {
+          this.refetch();
+        }
+      } else {
+        // TODO cancel invitation
+      }
+    }
+    // close popup regardless
+    this.toggleInvitationPopup(false);
+  }
+
+  toggleInvitationPopup(val: boolean) {
+    this.setState((state: State) => ({
+      invitationPopup: typeof val !== 'undefined' ? val : !state.invitationPopup
+    }));
   }
 
   render() {
-      return this.renderUserHome()
+    let id = this.props.user ? this.props.user.id : '';
+
+    return (
+      <Query query={this.query} variables={{id}}>
+        {({ loading, error, data, refetch }) => {
+          if (loading) return <Loader text="Loading user..." />;
+          if (error) return <p>Error :( {error}</p>;
+
+          data = data.user;
+          this.refetch = refetch;
+
+          return (
+            <div className="home-wrapper">
+              <Popup open={this.state.invitationPopup} data={{invitation: this.state.activeInvitation, respond: this.invitationResponder}} type={'TABLE_INVITATION'} close={() => this.toggleInvitationPopup(false)} />
+              { this.props.user && <Banner title={'Welcome back, ' + this.props.user.firstname + '!'} text={'We\'re happy you\'re here!'} /> }
+              <div className="grid-inner">
+                <div className="home-top-grid">
+                  <DashCard title={'Invitations'}>
+                    <Invitations invitations={data.invitations} clickHandler={this.invitationClickHandler} />
+                  </DashCard>
+                  <DashCard title={'Tables'}>
+                    <Tables tables={data.tables} />
+                  </DashCard>
+                </div>
+              </div>
+            </div>
+          );
+        }}
+      </Query>
+    );
   }
 }
 
   
 
-export default Home;
+export default withApollo(Home);

@@ -1,6 +1,6 @@
 .byte-group {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 2fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 220px));
     gap: 20px;
     align-items: center;
 

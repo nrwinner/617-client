@@ -26,7 +26,7 @@ class App extends React.Component<{ setUser: Function }> {
           <div>
             <Switch>
               <Route path="/home" render={(props: any) => <AuthGuard component={<Home />} /> } />
-              <Route path="/table" render={(props: any) => <Table />} />
+              <Route path="/table/:id" render={(props: any) => <Table {...props} />} />
               <Route path="/byte/:id" render={(props: any) => <AuthGuard component={<Byte {...props} />} />} />
               <Route path="/auth" render={(props: any) => <AuthComponent />} />
               {/* Catch all */}

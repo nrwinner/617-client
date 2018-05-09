@@ -2,9 +2,10 @@
 import * as React from 'react';
 
 import './SectionHeader.scss';
+import { UserType } from '@/types';
 
 type Props = {
-    user: any;
+    user: UserType;
     title: string;
     image?: string;
 }
@@ -18,7 +19,7 @@ const SectionHeader = (props: Props) => {
             </div>
             <div className="title">{ props.title }</div>
             <div className="owner">
-                { props.user.name }
+                { props.user.firstname + ' ' + props.user.lastname }
             </div>
         </div>
     );

@@ -47,7 +47,7 @@ export function appReducer(state: any = initialState, action: Action) {
 
     } else if (action.type === COMPLETE_BYTE_SECTION) {
         let s: State = assign(state);
-        if  (s.consumingByte) {
+        if  (s.consumingByte && s.consumingByte.sections) {
             let sections = new Map(s.consumingByte.sections);
             // @ts-ignore
             let section: SectionType = sections.get(action.id);
