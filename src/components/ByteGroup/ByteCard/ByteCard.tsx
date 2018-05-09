@@ -3,10 +3,13 @@ import { ByteType } from '@/types';
 import { Link } from 'react-router-dom';
 import './ByteCard.scss';
 
-const ByteCard = ({ byte, completed, admin, makeNew, deleteResponder }: { byte?: ByteType, completed?: boolean, admin?: boolean, makeNew?: boolean, deleteResponder?: Function }) => {
+const ByteCard = (
+    { byte, completed, admin, makeNew, deleteResponder, adminClickHandler, clickHandler, selected}:
+    { byte?: ByteType, completed?: boolean, admin?: boolean, makeNew?: boolean, deleteResponder?: Function, adminClickHandler?: Function, clickHandler?: Function, selected?: boolean }
+) => {
     if (!makeNew && byte) {
         return (
-            <div className={'byte-card ' + (completed ? 'completed ' : '') +  (admin ? 'admin ' : '')}>
+            <div className={'byte-card ' + (completed ? 'completed ' : '') +  (admin ? 'admin ' : '') + (selected ? 'selected ' : '')} onClick={() => clickHandler ? clickHandler(byte.id) : undefined}>
                 <div className="byte-card-image" style={{backgroundImage: byte.image ? 'url(' + byte.image + ')' : ''}}></div>
                 <div className="byte-card-name">{ truncate(byte.name, 49) }</div>
                 <div className="byte-card-creator">{ byte.creator.firstname + ' ' + byte.creator.lastname }</div>
@@ -16,13 +19,13 @@ const ByteCard = ({ byte, completed, admin, makeNew, deleteResponder }: { byte?:
                 </div> }
                 { admin && <div className="byte-admin-popover">
                     <Link to={'/byte/' + byte.id}> <div className="byte-nav" /></Link>
-                    <div className="byte-remove" />
+                    <div className="byte-remove" onClick={() => deleteResponder ? deleteResponder(byte.id) : undefined}/>
                 </div> }
             </div>
         )
     } else if (makeNew) {
         return (
-            <div className="byte-card new"></div>
+            <div className="byte-card new" onClick={() => adminClickHandler ? adminClickHandler() : undefined}></div>
         )
     } else {
         return <span />;

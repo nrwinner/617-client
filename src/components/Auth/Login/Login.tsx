@@ -9,31 +9,33 @@ type State = {
 }
 
 class Login extends React.Component<{ respond: Function }> {
-    state: State;
+    data: State;
 
     constructor(props: { respond: Function }) {
         super(props);
 
-        this.state = {
+        this.data = {
             email: '',
             password: ''
         }
     }
 
     update(property: string, value: string) {
-        let s: State = this.state;
+        let s: State = this.data;
         s[property] = value;
         
-        this.setState(s);
+        this.data = s;
     }
 
     respond() {
-        if (this.state.email === '' || this.state.password === '') {
+        if (this.data.email === '' || this.data.password === '') {
             alert('Please complete all fields!');
             return;
         }
 
-        this.props.respond(this.state);
+        console.log('DATA', this.data);
+
+        this.props.respond(this.data);
     }
 
     render() {
@@ -41,10 +43,10 @@ class Login extends React.Component<{ respond: Function }> {
             <div className="login">
                 <div className="auth-title">Login!</div>
                 <div className="form">
-                    <input name="email" type="text" placeholder="Email address" value={this.state.email} onChange={(e) => {
+                    <input name="email" type="text" placeholder="Email address" onChange={(e) => {
                         this.update('email', e.target.value);
                     }} />
-                    <input name="password" type="password" placeholder="Password" value={this.state.password} onChange={(e) => {
+                    <input name="password" type="password" placeholder="Password" onChange={(e) => {
                         this.update('password', e.target.value);
                     }} />
                     <div className="button-group">
