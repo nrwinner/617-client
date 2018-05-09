@@ -3,6 +3,7 @@ import './Popup.scss';
 
 import AddMembers from './AddMembers/AddMembers'
 import TableInvitation from './TableInvitation/TableInvitation';
+import AddBytes from './AddByte/AddBytes';
 
 type Props = {
     type: string;
@@ -16,7 +17,7 @@ type State = {
 }
 
 const types = [
-    'ADD_MEMBER', 'TABLE_INVITATION'
+    'ADD_MEMBER', 'TABLE_INVITATION', 'ADD_BYTES'
 ]
 
 class Popup extends React.Component<Props> {
@@ -54,7 +55,7 @@ class Popup extends React.Component<Props> {
         return (
             this.state.open ? 
                 <div className="popup-wrapper" onClick={this.toggle}>
-                    <div className="popup-inner" onClick={(e) => {e.stopPropagation()}}>
+                    <div className={'popup-inner ' + this.props.type.toLowerCase()} onClick={(e) => {e.stopPropagation()}}>
                         <div className="close" onClick={this.toggle}><i className="far fa-times"></i></div>
                         {this.props.type === 'TABLE_INVITATION' && 
                             <TableInvitation open={this.state.open} data={{invitation: this.props.data.invitation, respond: this.props.data.respond}} />
@@ -62,6 +63,10 @@ class Popup extends React.Component<Props> {
 
                         {this.props.type === 'ADD_MEMBERS' && 
                             <AddMembers data={{respond: this.props.data.respond, checked: this.props.data.checked}} />
+                        }
+
+                        {this.props.type === 'ADD_BYTES' && 
+                            <AddBytes data={{respond: this.props.data.respond, checked: this.props.data.checked}} />
                         }
                     </div> 
                 </div>

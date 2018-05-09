@@ -12,12 +12,13 @@ type State = {
 }
 
 class Register extends React.Component<{ respond: Function }> {
-    state: State;
+
+    data: State;
 
     constructor(props: { respond: Function }) {
         super(props);
 
-        this.state = {
+        this.data = {
             firstname: '',
             lastname: '',
             email: '',
@@ -27,32 +28,32 @@ class Register extends React.Component<{ respond: Function }> {
     }
 
     update(property: string, value: string) {
-        let s: State = this.state;
+        let s: State = this.data;
         s[property] = value;
         
-        this.setState(s);
+        this.data = s;
     }
 
     respond() {
-        let empty = Object.keys(this.state).map((k: string) => this.state[k]).filter((l: string) => l === '');
+        let empty = Object.keys(this.data).map((k: string) => this.data[k]).filter((l: string) => l === '');
 
         if (empty.length) {
             alert('Please complete all fields!');
             return;
         }
 
-        if (this.state.password !== this.state.passwordVerify) {
+        if (this.data.password !== this.data.passwordVerify) {
             alert('Passwords do not match!');
             return;
         }
 
-        if (!this.state.email.match(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/)) {
+        if (!this.data.email.match(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/)) {
             alert('Please enter a valid email address!');
             return;
         }
         
         
-        this.props.respond(this.state);
+        this.props.respond(this.data);
     }
 
     render() {
@@ -60,19 +61,19 @@ class Register extends React.Component<{ respond: Function }> {
             <div className="register">
                     <div className="auth-title">Register!</div>
                     <div className="form">
-                        <input name="first" type="text" placeholder="First name" value={this.state.firstname} onChange={(e) => {
+                        <input name="first" type="text" placeholder="First name" onChange={(e) => {
                             this.update('firstname', e.target.value);
                         }} />
-                        <input name="last" type="text" placeholder="Last name" value={this.state.lastname} onChange={(e) => {
+                        <input name="last" type="text" placeholder="Last name" onChange={(e) => {
                             this.update('lastname', e.target.value);
                         }} />
-                        <input name="email" type="text" placeholder="Email address" value={this.state.email} onChange={(e) => {
+                        <input name="email" type="text" placeholder="Email address" onChange={(e) => {
                             this.update('email', e.target.value);
                         }} />
-                        <input name="password" type="password" placeholder="Password" value={this.state.password} onChange={(e) => {
+                        <input name="password" type="password" placeholder="Password" onChange={(e) => {
                             this.update('password', e.target.value);
                         }} />
-                        <input name="passwordVerify" type="password" placeholder="Verify password" value={this.state.passwordVerify} onChange={(e) => {
+                        <input name="passwordVerify" type="password" placeholder="Verify password" onChange={(e) => {
                             this.update('passwordVerify', e.target.value);
                         }} />
                         <div className="button-group">

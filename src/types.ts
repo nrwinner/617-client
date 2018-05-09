@@ -10,9 +10,10 @@ export interface ByteType {
 }
 
 export interface UserType {
-    id?: string;
+    id: string;
     firstname: string;
     lastname: string;
+    name?: string;
     email: string;
     bytesCompleted?: ByteType[];
     tables?: TableType[];
