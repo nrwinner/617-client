@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { UserType } from '@/types';
+import { UserType } from '../../types';
 
 import './Navbar.scss';
 import { connect } from 'react-redux';
 
-import history from '@/history';
+import history from '../../history';
 import UserInjector from '../../UserInjector';
 
 class Navbar extends UserInjector<{}> {

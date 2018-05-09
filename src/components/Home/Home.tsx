@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { initUser } from '@/redux-actions';
+import { initUser } from '../../redux-actions';
 
 import { connect } from 'react-redux';
-import history from '@/history';
+import history from '../../history';
 import { Loader } from '../Loader/Loader';
 
 import Banner from './components/Banner/Banner';
@@ -21,7 +21,7 @@ import { Query, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
-import Popup from '@/components/Popup/Popup';
+import Popup from '../../components/Popup/Popup';
 import ApolloClient from 'apollo-client';
 
 type State = {
@@ -40,7 +40,7 @@ class Home extends UserInjector<{ props: Props }> {
   state: State;
   query: any;
 
-  constructor(props: any) {
+  constructor(public props: any) {
     super(props);
 
     this.query = gql`query user($id: String!) {

@@ -2,11 +2,11 @@ import * as React from 'react';
 import axios  from 'axios';
 // @ts-ignore
 import { Cookies } from 'react-cookie';
-import { initUser } from '@/redux-actions';
+import { initUser } from './redux-actions';
 import { connect } from 'react-redux';
 import routes from './routes';
-import { UserType } from '@/types';
-import history from '@/history';
+import { UserType } from './types';
+import history from './history';
 import { Loader } from './components/Loader/Loader';
 
 type State= {

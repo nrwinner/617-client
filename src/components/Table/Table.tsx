@@ -5,12 +5,12 @@ import Popup from '../Popup/Popup'
 import ByteGroup from '../ByteGroup/ByteGroup';
 import './Table.scss';
 import { connect } from 'react-redux';
-import { UserType, ByteType } from '@/types';
+import { UserType, ByteType } from '../../types';
 import { Link } from 'react-router-dom';
 import UserGroup from '../UserGroup/UserGroup';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { Loader } from '@/components//Loader/Loader';
+import { Loader } from '../../components//Loader/Loader';
 
 type Props = {
   currentUser: UserType;

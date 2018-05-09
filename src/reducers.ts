@@ -1,6 +1,6 @@
-import { Action, INIT_USER, LOGOUT_USER } from '@/redux-actions';
-import { BYTE_CHANGE_SECTION, INIT_CONSUMABLE_BYTE, SELECT_QUESTION_OPTION, COMPLETE_BYTE_SECTION } from '@/redux-actions'
-import { UserType, ByteType, SectionType, QuestionType, QuestionOptionType } from '@/types'
+import { Action, INIT_USER, LOGOUT_USER } from './redux-actions';
+import { BYTE_CHANGE_SECTION, INIT_CONSUMABLE_BYTE, SELECT_QUESTION_OPTION, COMPLETE_BYTE_SECTION } from './redux-actions';
+import { UserType, ByteType, SectionType, QuestionType, QuestionOptionType } from './types';
 
 type State = {
     consumingByte?: ByteType;

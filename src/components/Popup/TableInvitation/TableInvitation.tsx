@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TableType } from '@/types';
+import { TableType } from '../../../types';
 import './TableInvitation.scss';
 
 const TableInvitation = ({ open, data }: { open: boolean, data: any }) => {

@@ -1,13 +1,13 @@
 
 import * as React from 'react';
 import QuizQuestion from './Question/QuizQuestion';
-import { QuestionType, SectionType } from '@/types';
+import { QuestionType, SectionType } from '../../../types';
 import { ApolloConsumer } from 'react-apollo';
 
 
 // Redux
 import { connect } from 'react-redux';
-import { selectQuestionOption } from '@/redux-actions';
+import { selectQuestionOption } from '../../../redux-actions';
 
 import './Quiz.scss';
 import ApolloClient from 'apollo-client/ApolloClient';
@@ -15,7 +15,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 import { completeSection } from '../../../redux-actions';
 
-import history from '@/history';
+import history from '../../../history';
 
 type Props = {
     userID: string;

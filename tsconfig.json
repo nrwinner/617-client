@@ -5,7 +5,8 @@
     "target": "es5",
     "lib": [
       "es7",
-      "dom"
+      "dom",
+      "esnext.asynciterable"
     ],
     "sourceMap": true,
     "allowJs": true,
@@ -14,9 +15,9 @@
     "rootDir": "src",
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "baseUrl": "src",
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "baseUrl": "./src",
     "paths": {
       "@/*": [ "./*" ]
     }

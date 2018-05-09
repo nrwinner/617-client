@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { QuestionType } from '@/types';
+import { QuestionType } from '../../../../types';
 
 // Redux
 import { connect } from 'react-redux';

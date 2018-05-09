@@ -1,14 +1,14 @@
 
 import * as React from 'react';
-import SectionItem from './SectionItem/SectionItem'
+import SectionItem from './SectionItem/SectionItem';
 import SectionHeader from './SectionHeader/SectionHeader';
 
 // Types
-import { SectionType, SectionItemType, UserType } from '@/types';
+import { SectionType, SectionItemType, UserType } from '../../../..//types';
 
 // Redux
 import { connect } from 'react-redux';
-import { byteChangeSection } from '@/redux-actions';
+import { byteChangeSection } from '../../../../redux-actions';
 
 type Props = {
     sections: Map<string, SectionType>;

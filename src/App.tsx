@@ -8,10 +8,10 @@ import Table from './components/Table/Table';
 import history from './history';
 
 import Navbar from './components/Navbar/Navbar';
-import AuthGuard from 'AuthGuard';
+import AuthGuard from './AuthGuard';
 
 
-class App extends React.Component<{ setUser: Function }> {
+class App extends React.Component<any, any> {
 
   constructor(props: any) {
     super(props);

@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 import './SectionHeader.scss';
-import { UserType } from '@/types';
+import { UserType } from '../../../../../types';
 
 type Props = {
     user: UserType;

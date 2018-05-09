@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import './Invitations.scss';
-import { TableType } from '@/types';
+import { TableType } from '../../../../types';
 
 const Invitations = ({ invitations, clickHandler }: { invitations: TableType[], clickHandler?: Function }) => {
     return (

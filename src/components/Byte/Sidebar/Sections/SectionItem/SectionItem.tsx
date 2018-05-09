@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './SectionItem.scss';
 
-import { SectionItemType } from '@/types';
+import { SectionItemType } from '../../../../../types';
 
 type Props = {
     data: SectionItemType;

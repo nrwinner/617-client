@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { UserType } from '@/types';
+import { UserType } from '../../../types';
 import './UserCard.scss';
 
 const UserCard = ({ user }: { user: UserType }) => {

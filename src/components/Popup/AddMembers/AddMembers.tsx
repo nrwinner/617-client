@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Loader } from '../../Loader/Loader';
 
-import { UserType } from '@/types';
+import { UserType } from '../../../types';
 
 import './AddMembers.scss';
 

@@ -1,18 +1,18 @@
 import * as React from "react";
 import Sidebar from "./Sidebar/Sidebar";
 import Content from "./Content/Content";
-import { Loader } from "../Loader/Loader";
+import { Loader } from '../Loader/Loader';
 
 // Redux
-import { connect } from "react-redux";
-import { initConsumableByte } from "@/redux-actions";
+import { connect } from 'react-redux';
+import { initConsumableByte } from '../../redux-actions';
 
 // Apollo
-import { Query } from "react-apollo";
-import gql from "graphql-tag";
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 
 
-import "./Byte.scss";
+import './Byte.scss';
 
 type Props = {
   initByte: any;

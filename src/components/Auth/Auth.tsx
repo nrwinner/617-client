@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { Redirect, Route, Router, Switch } from 'react-router-dom';
 import axios  from 'axios';
-import routes from '@/routes';
-import history from '@/history';
+import routes from '../../routes';
+import history from '../../history';
 
 import './Auth.scss';
 
 import Login from './Login/Login';
 import Register from './Register/Register';
 
-import { initUser } from '@/redux-actions';
+import { initUser } from '../../redux-actions';
 import { connect } from 'react-redux';
-import { UserType } from '@/types';
+import { UserType } from '../../types';
 
 class AuthComponent extends React.Component<{ setUser: Function } > {
 

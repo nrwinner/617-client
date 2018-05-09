@@ -3,7 +3,7 @@ import { Component } from 'react';
 import './Video.scss';
 
 // Types
-import { VideoType } from '@/types';
+import { VideoType } from '../../../types';
 
 type Props = {
     source: VideoType

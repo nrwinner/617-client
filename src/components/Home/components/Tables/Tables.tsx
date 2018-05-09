@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './Tables.scss';
-import { TableType } from '@/types';
+import { TableType } from '../../../../types';
 import { Link } from 'react-router-dom';
 
 const Tables = ({ tables }: { tables: TableType[] }) => {
