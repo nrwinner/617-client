@@ -45,6 +45,7 @@ class Home extends UserInjector<{ props: Props }> {
 
     this.query = gql`query user($id: String!) {
       user(id: $id) {
+        id,
         bytesCompleted {
           id,
           name,
@@ -100,23 +101,44 @@ class Home extends UserInjector<{ props: Props }> {
   async invitationResponder(accept: boolean) {
     if (typeof accept !== 'undefined') {
 
-      if (alert) {
+      if (accept) {
+        //accept invitation
         let q = gql`mutation joinTable($tableId: String!, $userId: String!) {
           joinTable(tableId: $tableId, userId: $userId)
         }`;
-  
-        // @ts-ignore
-        const { data } = await this.props.client.mutate({mutation: q, variables: {
-            tableId: this.state.activeInvitation ? this.state.activeInvitation.id : '',
-            userId: this.props.user ? this.props.user.id : '',
-        }});
+        
+        try {
+          let { data } = await this.props.client.mutate({mutation: q, variables: {
+              tableId: this.state.activeInvitation ? this.state.activeInvitation.id : '',
+              userId: this.props.user ? this.props.user.id : '',
+          }});
 
-        // sanity check
-        if (typeof this.refetch !== 'undefined') {
-          this.refetch();
+          // sanity check
+          if (typeof this.refetch !== 'undefined') {
+            this.refetch();
+          }
+        } catch (e) {
+          console.log(`Error: ${e}`);
         }
       } else {
-        // TODO cancel invitation
+        // cancel invitation
+        let q = gql`mutation uninviteUserToTable($tableId: String, $email: String) {
+          uninviteUserToTable(tableId: $tableId, email: $email) { id }
+        }`;
+
+        try {
+          let { data } = await this.props.client.mutate({mutation: q, variables: {
+              tableId: this.state.activeInvitation ? this.state.activeInvitation.id : '',
+              email: this.props.user ? this.props.user.email : '',
+          }});
+
+          // sanity check
+          if (typeof this.refetch !== 'undefined') {
+            this.refetch();
+          }
+        } catch (e) {
+          console.log(`Error: ${e}`);
+        }
       }
     }
     // close popup regardless
