@@ -1,6 +1,6 @@
-const apiBase = 'http://localhost:4000';
+const apiBase = 'https://softwarebytes.herokuapp.com';
 
-const api = apiBase + '/api';
+export const api = apiBase + '/api';
 const users = apiBase + '/users'
 
 const routes = {
@@ -10,4 +10,3 @@ const routes = {
 }
 
 export default routes;
-module.exports.api = api;

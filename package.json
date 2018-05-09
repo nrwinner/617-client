@@ -10,7 +10,7 @@
     "@types/react-redux": "^5.0.16",
     "jest": "^22.4.3",
     "node-sass": "^4.8.3",
-    "parcel-bundler": "^1.7.1",
+    "parcel-bundler": "^1.7.0",
     "react-scripts": "0.9.5",
     "ts-jest": "^22.4.2",
     "typescript": "^2.7.2"
@@ -34,7 +34,7 @@
     "root": "^3.1.0"
   },
   "scripts": {
-    "build": "node_modules/.bin/parcel build --no-cache src/index.html",
+    "build": "node_modules/.bin/parcel build --no-cache --no-source-maps --no-minify --public-url ./ src/index.html",
     "start": "node_modules/.bin/parcel src/index.html --open --no-cache",
     "test": "node_modules/.bin/jest --verbose"
   },
