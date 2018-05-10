@@ -98,7 +98,7 @@ class Home extends UserInjector<{ props: Props }> {
         this.toggleInvitationPopup(true);
       });
     } else {
-      alert(' you didnt pass anything! ');
+      console.log('Caught Error: You didn\'t pass anything to the invitationClickHandler function! This should\'t happen!');
     }
   }
 

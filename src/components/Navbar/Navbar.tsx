@@ -3,10 +3,11 @@ import { UserType } from '../../types';
 import { Cookies } from 'react-cookie';
 import './Navbar.scss';
 import { connect } from 'react-redux';
-
+import axios from 'axios';
 import history from '../../history';
 import UserInjector from '../../UserInjector';
 import { logoutUser } from '../../redux-actions';
+import routes from '../../routes';
 
 class Navbar extends UserInjector<{}> {
     avatar: string;
@@ -18,8 +19,9 @@ class Navbar extends UserInjector<{}> {
     }
 
     removeCookie() {
-        new Cookies().remove('presence', { path: '/'});
-        this.props.logout();
+        axios.delete(routes.login, { withCredentials: true }).then(res => {
+            this.props.logout();
+        });
     }
 
     render() {

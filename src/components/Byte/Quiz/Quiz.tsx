@@ -110,9 +110,6 @@ class Quiz extends React.Component<Props, State> {
                 this.setState({
                     activeQuestion: this.state.questionList[++this.questionListIndex],
                 })
-            } else {
-                // we're out of questions
-                alert('you\'re done!');
             }
         }
     }
