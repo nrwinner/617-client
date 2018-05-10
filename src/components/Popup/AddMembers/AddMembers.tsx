@@ -74,9 +74,7 @@ class AddMembers extends React.Component<Props> {
             return ( <Loader text={'Loading users...'} /> );
         } else {
             if (this.state.data.users.length) {
-                console.log(this.props.data.checked);
                 let unused = this.state.data.users.filter((u: UserType) => !this.props.data.checked.includes(u.id));
-                console.log(unused);
                 
                 if (unused.length) {
                     return (
@@ -84,7 +82,6 @@ class AddMembers extends React.Component<Props> {
                             <div className="popup-title">Add Users</div>
                             <div className="add-users-results">
                                 { unused.map((u: UserType) => {
-                                    console.log(this.state.selected.includes(u.email));
                                     return (
                                         <UserCard selected={this.state.selected.includes(u.email)} user={u} clickHandler={this.select} key={u.id} />   
                                     )

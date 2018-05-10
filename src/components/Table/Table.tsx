@@ -216,7 +216,6 @@ class Table extends React.Component<Props> {
     }`;
 
     for (let item of s) {
-      console.log(item)
       await this.props.client.mutate({mutation: q, variables: {
         tableId: this.state.data.table.id,
         email: item
