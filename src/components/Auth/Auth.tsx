@@ -13,10 +13,18 @@ import { initUser } from '../../redux-actions';
 import { connect } from 'react-redux';
 import { UserType } from '../../types';
 
+type State = {
+    loginError?: string;
+    registerError?: string;
+}
+
 class AuthComponent extends React.Component<{ setUser: Function } > {
+    state: State;
 
     constructor(props: any) {
         super(props);
+
+        this.state = {};
 
         this.login = this.login.bind(this);
         this.register = this.register.bind(this);
@@ -27,8 +35,9 @@ class AuthComponent extends React.Component<{ setUser: Function } > {
             this.props.setUser(res.data as UserType);
             history.push('/home');
         }, error => {
-            alert('An error occured!');
-            console.log(`Caught Error: ${error}`)
+            this.setState({
+                loginError: 'Incorrect username/password!'
+            });
         })
     }
 
@@ -37,8 +46,9 @@ class AuthComponent extends React.Component<{ setUser: Function } > {
             this.props.setUser(res.data as UserType);
             history.push('/home');
         }, error => {
-            alert('An error occured!');
-            console.log(`Caught Error: ${error}`)
+            this.setState({
+                registerError: 'An error occured!'
+            });
         })
     } 
     
@@ -48,8 +58,8 @@ class AuthComponent extends React.Component<{ setUser: Function } > {
                 <Router history={history}>
                     <div className="auth-component">
                         <Switch>
-                            <Route path="/auth/login" render={(props: any) => <Login respond={this.login} {...props} />} />
-                            <Route path="/auth/register" render={(props: any) => <Register respond={this.register} {...props} />} />
+                            <Route path="/auth/login" render={(props: any) => <Login respond={this.login} error={this.state.loginError || undefined} {...props} />} />
+                            <Route path="/auth/register" render={(props: any) => <Register respond={this.register} error={this.state.registerError || undefined} {...props} />} />
                             <Redirect to={'/auth/login'} />
                         </Switch>
                     </div>

@@ -5,35 +5,55 @@ import history from '../../../history';
 type State = {
     email: string;
     password: string;
+    error: string;
     [key: string]: string;
 }
 
-class Login extends React.Component<{ respond: Function }> {
-    data: State;
+type Props = {
+    respond: Function, error?: string
+}
 
-    constructor(props: { respond: Function }) {
+class Login extends React.Component<Props> {
+    state: State;
+
+    constructor(props: Props) {
         super(props);
 
-        this.data = {
+        this.state = {
             email: '',
-            password: ''
+            password: '',
+            error: ''
         };
     }
 
+    componentWillReceiveProps(nextProps: Props) {
+        if (nextProps.error) {
+            this.setState({
+                error: nextProps.error
+            });
+        }
+    }
+
     update(property: string, value: string) {
-        let s: State = this.data;
+        let s: State = this.state;
         s[property] = value;
         
-        this.data = s;
+        this.setState(s);
     }
 
     respond() {
-        if (this.data.email === '' || this.data.password === '') {
-            alert('Please complete all fields!');
+        this.setState({
+            error: ''
+        });
+
+        if (this.state.email === '' || this.state.password === '') {
+            this.setState({
+                error: 'Please complete all fields!'
+            });
             return;
         }
 
-        this.props.respond(this.data);
+        this.props.respond(this.state);
     }
 
     render() {
@@ -41,6 +61,7 @@ class Login extends React.Component<{ respond: Function }> {
             <div className="login">
                 <div className="auth-title">Login!</div>
                 <div className="form">
+                    { this.state.error && this.state.error !== '' && <div className="error"> { this.state.error } </div> }
                     <input name="email" type="text" placeholder="Email address" onChange={(e) => {
                         this.update('email', e.target.value);
                     }} />

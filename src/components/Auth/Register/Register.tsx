@@ -8,52 +8,62 @@ type State = {
     email: string;
     password: string;
     passwordVerify: string;
+    error: string;
     [key: string]: string;
 }
 
 class Register extends React.Component<{ respond: Function }> {
-
-    data: State;
+    state: State;
 
     constructor(props: { respond: Function }) {
         super(props);
 
-        this.data = {
+        this.state = {
             firstname: '',
             lastname: '',
             email: '',
             password: '',
-            passwordVerify: ''
+            passwordVerify: '',
+            error: ''
         }
     }
 
     update(property: string, value: string) {
-        let s: State = this.data;
+        let s: State = this.state;
         s[property] = value;
         
-        this.data = s;
+        this.setState(s);
     }
 
     respond() {
-        let empty = Object.keys(this.data).map((k: string) => this.data[k]).filter((l: string) => l === '');
+        let empty = Object.keys(this.state)
+            .filter((k: string) => k !== 'error')
+            .map((k: string) => this.state[k])
+            .filter((l: string) => l === '');
 
         if (empty.length) {
-            alert('Please complete all fields!');
+            this.setState({
+                error: 'Please complete all fields!'
+            });
             return;
         }
 
-        if (this.data.password !== this.data.passwordVerify) {
-            alert('Passwords do not match!');
+        if (this.state.password !== this.state.passwordVerify) {
+            this.setState({
+                error: 'Passwords don\'t match!'
+            });
             return;
         }
 
-        if (!this.data.email.match(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/)) {
-            alert('Please enter a valid email address!');
+        if (!this.state.email.match(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/)) {
+            this.setState({
+                error: 'Please enter a valid email'
+            });
             return;
         }
         
         
-        this.props.respond(this.data);
+        this.props.respond(this.state);
     }
 
     render() {
@@ -61,6 +71,7 @@ class Register extends React.Component<{ respond: Function }> {
             <div className="register">
                     <div className="auth-title">Register!</div>
                     <div className="form">
+                        { this.state.error && this.state.error !== '' && <div className="error"> { this.state.error } </div> }
                         <input name="first" type="text" placeholder="First name" onChange={(e) => {
                             this.update('firstname', e.target.value);
                         }} />

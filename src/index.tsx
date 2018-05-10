@@ -32,8 +32,6 @@ const client = new ApolloClient({
     link,
     cache: new InMemoryCache()
 });
-
-
 const root = document.getElementById('root');
 
 if (root) {
