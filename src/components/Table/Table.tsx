@@ -122,8 +122,15 @@ class Table extends React.Component<Props> {
 
       // process data
       let owned = data.table.owner.id === userId;
-      this.completed = data.user.bytesCompleted.map((b: ByteType) => b.id);
-      let b: ByteType = this.getNextByte(data.table.bytes, this.completed);
+      
+      if (data.user.bytesCompleted && data.user.bytesCompleted.length) {
+        this.completed = data.user.bytesCompleted.map((b: ByteType) => b.id);
+        let b: ByteType = this.getNextByte(data.table.bytes, this.completed);
+
+        this.setState({
+          nextByte: b
+        })
+      }
 
       let members = data.table.members.map((u: UserType) => Object.assign({}, u, {status: true}))
       let invitations = data.table.invitations.map((u: UserType) => Object.assign({}, u, {status: false}))
@@ -133,7 +140,6 @@ class Table extends React.Component<Props> {
         members, 
         invitations,
         owned,
-        nextByte: b
       })
     } catch (e) {
       console.log(`Error: ${e}`);
