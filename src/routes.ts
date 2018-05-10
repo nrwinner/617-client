@@ -1,4 +1,4 @@
-const apiBase = 'https://softwarebytes.herokuapp.com';
+const apiBase = '';
 
 export const api = apiBase + '/api';
 const users = apiBase + '/users'
