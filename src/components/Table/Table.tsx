@@ -37,7 +37,7 @@ type State = {
 class Table extends React.Component<Props> {
   query: any;
   completed: Array<string>;
-  state: State
+  state: State;
 
   constructor(props: Props) {
     super(props);
@@ -117,7 +117,7 @@ class Table extends React.Component<Props> {
   }
 
   async performQuery(userId: string) {
-    
+    try {
       const { data }: { data: any } =
         await this.props.client.query(
           {query: this.query, fetchPolicy: 'no-cache', variables: {tableId: this.state.tableID, userId}}
@@ -154,7 +154,9 @@ class Table extends React.Component<Props> {
         invitations,
         owned,
       });
-    
+    } catch (e) {
+      console.log(`Caught Error: ${e}`)
+    }
   }
 
   componentWillReceiveProps(nextProps: any) {

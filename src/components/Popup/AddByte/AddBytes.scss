@@ -6,10 +6,24 @@
     height: 80vh;
     overflow-y: scroll;
 
+    .add-bytes {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
     .none {
         color: lighten($dark-text, 30);
         font-size: 15px;
         margin-top: 15px;
+    }
+
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-self: flex-end;
+        height: 100%;
     }
 }
 
