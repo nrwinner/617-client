@@ -1,8 +1,16 @@
+@import 'src/_vars.scss';
+
 .popup-inner.add_bytes {
     max-width: 100% !important;
     width: 80vw;
     height: 80vh;
     overflow-y: scroll;
+
+    .none {
+        color: lighten($dark-text, 30);
+        font-size: 15px;
+        margin-top: 15px;
+    }
 }
 
 .add-bytes-results {

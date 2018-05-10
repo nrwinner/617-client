@@ -1,95 +1,112 @@
 import * as React from 'react';
 import { Loader } from '../../Loader/Loader';
-
-import { UserType } from '../../../types';
-
+import { ByteType, UserType } from '@/types';
+import { withApollo } from 'react-apollo';
+import ApolloClient from 'apollo-client';
+import gql from 'graphql-tag';
 import './AddMembers.scss';
 
-// Apollo
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
-
-
-type Data = {
-    respond: Function;
-    checked?: Array<UserType>;
-}
+import UserCard from '../../UserGroup/UserCard/UserCard';
 
 type Props = {
-    data: Data
+    data: {respond: Function, checked: string[]}
+    open?: boolean;
+    client?: ApolloClient<any>;
 }
 
 type State = {
-    checked: Array<UserType>;
+    open?: boolean;
+    data?: any;
+    selected: string[];
 }
 
 class AddMembers extends React.Component<Props> {
     state: State;
-    query: string;
 
     constructor(props: Props) {
         super(props);
 
         this.state = {
-            checked: props.data.checked ? props.data.checked : []
-        }
+            selected:  [] 
+        };
 
-        this.query = `query {
+        this.performQuery = this.performQuery.bind(this);
+        this.select = this.select.bind(this);
+        this.performQuery();
+    }
+
+
+   async performQuery() {
+        let q = gql`query {
             users {
-                id,
-                name
+                id, firstname, lastname, email
             }
-        }`;
-    }
-
-    componentWillReceiveProps(nextProps: any) {
-        this.setState({
-            checked: nextProps.checked ? nextProps.checked : []
-        });
-    }
-
-    selectUser(user: UserType) {
-        let ids = this.state.checked ? this.state.checked.map(m => m.id) : [];
-        let c = this.state.checked || [];
-
-        console.log(ids, c, user)
-
-        if (!ids.includes(user.id)) {
-            c.push(user)
-        } else {
-            c = c.filter(m => m.id !== user.id)
-        }
+        }`
+        
+        // typescript not knowing how to work again
+        // @ts-ignore
+        const { data } =  await this.props.client.query({query: q})
 
         this.setState({
-            checked: c
+            data
         })
     }
 
-    render() {
-        return (<Query query={gql`${this.query}`}>
-            {({ loading, error, data }) => {
-                if (loading) return <Loader text="Loading users..." />;
-                if (error) return <p>Error :( {error}</p>;
+    select({ email }: {email: string, [propName: string]: any}) {
+        if (typeof email !== 'undefined') {
+            if (this.state.selected.includes(email)) {
+                let selected = this.state.selected;
+                selected.splice(selected.indexOf(email), 1);
 
-                return (
-                <div className="add-members">
-                    <div className="popup-title">Users</div>
-                    <input type="text" name="users_search" placeholder="Filter users..."/>
-                    <div className="users">
-                        {data.users.map((m: UserType) => (
-                            <div className={'user ' + (this.state.checked.filter(c => c.id === m.id).length ? 'checked' : '')} onClick={() => this.selectUser(m)}>
-                                <span>{m.firstname + ' ' + m.lastname}</span>
+                this.setState((state: State) => ({
+                    selected
+                }));
+            } else {
+                this.setState((state: State) => ({
+                    selected: state.selected.concat(email)
+                }));
+            }
+        }
+    }
+
+    render() {
+        if (!this.state || !this.state.data) {
+            return ( <Loader text={'Loading users...'} /> );
+        } else {
+            if (this.state.data.users.length) {
+                console.log(this.props.data.checked);
+                let unused = this.state.data.users.filter((u: UserType) => !this.props.data.checked.includes(u.id));
+                console.log(unused);
+                
+                if (unused.length) {
+                    return (
+                        <div className="add-users">
+                            <div className="popup-title">Add Users</div>
+                            <div className="add-users-results">
+                                { unused.map((u: UserType) => {
+                                    console.log(this.state.selected.includes(u.email));
+                                    return (
+                                        <UserCard selected={this.state.selected.includes(u.email)} user={u} clickHandler={this.select} key={u.id} />   
+                                    )
+                                }) }
                             </div>
-                        ))}
-                    </div>
-                    <div className="btn-group">
-                        <div className="button" onClick={() => this.props.data.respond(this.state.checked)}>Add Users!</div>
-                    </div>
+                            <div className="btn-group">
+                                <div className="button" onClick={() => this.props.data.respond(this.state.selected)}>Add Users</div>
+                            </div>
+                        </div>
+                    )
+                }
+            }
+
+            return (
+                <div className="add-bytes">
+                    <div className="popup-title">Add Bytes</div>
+                    <div className="none">No more users to add!</div>
                 </div>
-                );
-            }}
-        </Query>);
+            )
+        }
     }
 }
 
-export default AddMembers;
+// @ts-ignore
+export default withApollo(AddMembers)

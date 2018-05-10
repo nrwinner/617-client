@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ByteType } from '../../types';
 import ByteCard from './ByteCard/ByteCard';
+// @ts-ignore
 import { Link } from 'react-router-dom';
 import './ByteGroup.scss';
 

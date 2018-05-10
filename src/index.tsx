@@ -14,6 +14,7 @@ import { createHttpLink } from "apollo-link-http";
 import { Provider } from 'react-redux';
 
 // React-Cookie
+// @ts-ignore
 import { CookiesProvider } from 'react-cookie';
 
 import store from './store';
@@ -22,7 +23,7 @@ if (module.hot) {
     console.log("in module.hot");
     module.hot.accept( () => {
         const nextRootReducer = require('./reducers').default;
-        store.replaceReducer(nextRootReducer)
+        store.replaceReducer(nextRootReducer);
     });
 }
 const link = createHttpLink({uri: api, credentials: 'include'});

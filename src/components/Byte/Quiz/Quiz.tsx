@@ -148,7 +148,6 @@ class Quiz extends React.Component<Props, State> {
 
             // check should complete byte
             let test = Array.from(this.props.allSections, ([key, value]) => value).filter((s: SectionType) => !s.complete).length;
-            alert(test);
             if (test === 0) {
                 // all sections are complete
                 let q = gql`mutation completeByte($byteId: String!, $userId: String!) {
@@ -160,7 +159,7 @@ class Quiz extends React.Component<Props, State> {
                     userId: this.props.userID
                 }});
 
-                if (data && data.completeByte) {
+                if (data) {
                     history.goBack();
                 }
             }
@@ -191,7 +190,7 @@ class Quiz extends React.Component<Props, State> {
                         })
                     }
                     </div>
-                    { done && <div className="btn-group"><div className="button" onClick={() => this.checkSession(this.props.section, client)}>Check Session</div></div> }
+                    { done && <div className="btn-group"><div className="button" onClick={() => this.checkSession(this.props.section, client)}>Check your answers</div></div> }
                 </div>
             ): <div>You done goofed</div>)}
             </ApolloConsumer> 

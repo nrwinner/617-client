@@ -26,6 +26,8 @@ type State = {
   mode: boolean; // true is bytes, false is guests
   tableID: string;
   data?: any;
+  members?: UserType[];
+  invitations?: UserType[]
   owned?: boolean;
 }
 
@@ -106,6 +108,8 @@ class Table extends React.Component<Props> {
     this.performQuery = this.performQuery.bind(this);
     this.removeByte = this.removeByte.bind(this);
     this.addBytes = this.addBytes.bind(this);
+    this.addMembers = this.addMembers.bind(this);
+    this.removeUser = this.removeUser.bind(this);
 
     if (props.currentUser) {
       this.performQuery(props.currentUser.id);
@@ -121,8 +125,13 @@ class Table extends React.Component<Props> {
       this.completed = data.user.bytesCompleted.map((b: ByteType) => b.id);
       let b: ByteType = this.getNextByte(data.table.bytes, this.completed);
 
+      let members = data.table.members.map((u: UserType) => Object.assign({}, u, {status: true}))
+      let invitations = data.table.invitations.map((u: UserType) => Object.assign({}, u, {status: false}))
+
       this.setState({
         data,
+        members, 
+        invitations,
         owned,
         nextByte: b
       })
@@ -150,9 +159,9 @@ class Table extends React.Component<Props> {
   /**
    * Toggles the AddMembers popup
    */
-  toggleAddMembersPopup() {
+  toggleAddMembersPopup(val?: boolean) {
     this.setState((state: State) => ({
-      addMembersPopup: !state.addMembersPopup
+      addMembersPopup: typeof val !== 'undefined' ? val : !state.addMembersPopup
     }))
   }
 
@@ -163,12 +172,6 @@ class Table extends React.Component<Props> {
     this.setState((state: State) => ({
       addBytesPopup: typeof val !== 'undefined' ? val : !state.addBytesPopup
     }));
-  }
-
-  // TODO implement this
-  resetMembers(m: Array<any>) {
-    // TODO query here
-    alert('test');
   }
 
   async addBytes(s: string[]) {
@@ -186,6 +189,24 @@ class Table extends React.Component<Props> {
     this.performQuery(this.props.currentUser.id);
 
     this.toggleAddBytesPopup(false);
+  }
+
+  async addMembers(s: string[]) {
+    let q = gql`mutation inviteUser($tableId: String!, $email: String!) {
+      inviteUser(tableId: $tableId, email: $email) { id }
+    }`;
+
+    for (let item of s) {
+      console.log(item)
+      await this.props.client.mutate({mutation: q, variables: {
+        tableId: this.state.data.table.id,
+        email: item
+      }});
+    }
+
+    this.performQuery(this.props.currentUser.id);
+
+    this.toggleAddMembersPopup(false);
   }
 
   /**
@@ -213,6 +234,38 @@ class Table extends React.Component<Props> {
     }
   }
 
+  async removeUser(user: UserType) {
+    if (user.id === this.state.data.table.owner.id) {
+      alert('You can\'t remove yourself from your own table!');
+      return;
+    }
+    if (typeof user.status !== 'undefined') {
+      //  the user has a status
+      let q: any;
+      let uid: string;
+      if (user.status) {
+        // member
+        q = gql`mutation removeUserFromTable($tableId: String!, $uid: String!) {
+          removeUserFromTable(tableId: $tableId, userId: $uid)
+        }`;
+        uid = user.id;
+      } else {
+        // invitation
+        q = gql`mutation uninviteUserToTable($tableId: String!, $uid: String!) {
+          uninviteUserToTable(tableId: $tableId, email: $uid) { id }
+        }`;
+        uid = user.email;
+      }
+
+      await this.props.client.mutate({mutation: q, variables: {
+        tableId: this.state.data.table.id,
+        uid
+      }});
+
+      this.performQuery(this.props.currentUser.id);
+    }
+  }
+
   /**
    * Component render method, data is retrieved before this point in the event loop
    */
@@ -221,10 +274,12 @@ class Table extends React.Component<Props> {
         return <Loader text="Loading table..." />;
       } else {
         let data = this.state.data;
+        // @ts-ignore
+        let members = ([]).concat(this.state.members).concat(this.state.invitations);
         return (
           <div>
-            <Popup open={this.state.addMembersPopup} data={{respond: this.resetMembers, checked: data.table.members.map((m: any) => {return {id: m.id, name: m.name}})}} type="ADD_MEMBERS" close={this.toggleAddMembersPopup} />
-            <Popup open={this.state.addBytesPopup} data={{respond: this.addBytes, checked: data.table.bytes.map((b: any) => {return {id: b.id,}})}} type="ADD_BYTES" close={this.toggleAddBytesPopup} />
+            <Popup open={this.state.addMembersPopup} data={{respond: this.addMembers, checked: members.map((m: any) => m.id)}} type="ADD_MEMBERS" close={this.toggleAddMembersPopup} />
+            <Popup open={this.state.addBytesPopup} data={{respond: this.addBytes, checked: data.table.bytes.map((b: any) => b.id)}} type="ADD_BYTES" close={this.toggleAddBytesPopup} />
             <div className='table'>
               { this.state.nextByte && 
               <div className="grid-inner nextByte">
@@ -250,7 +305,7 @@ class Table extends React.Component<Props> {
                   <ByteGroup collection={true} admin={this.state.owned} bytes={data.table.bytes} deleteResponder={this.removeByte} completed={this.completed} adminClickHandler={() => this.toggleAddBytesPopup(true)}  />
                 </div> }
                 { !this.state.mode && <div className="table-users">
-                  <UserGroup users={data.table.members} />
+                  <UserGroup admin={this.state.owned} users={members} deleteResponder={this.removeUser} adminClickHandler={() => this.toggleAddMembersPopup(true)} />
                 </div> }
               </div>
             </div>

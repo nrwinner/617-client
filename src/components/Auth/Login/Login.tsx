@@ -17,7 +17,7 @@ class Login extends React.Component<{ respond: Function }> {
         this.data = {
             email: '',
             password: ''
-        }
+        };
     }
 
     update(property: string, value: string) {
@@ -32,8 +32,6 @@ class Login extends React.Component<{ respond: Function }> {
             alert('Please complete all fields!');
             return;
         }
-
-        console.log('DATA', this.data);
 
         this.props.respond(this.data);
     }

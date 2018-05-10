@@ -1,4 +1,4 @@
-const apiBase = 'https://softwarebytes.herokuapp.com';
+const apiBase = 'http://localhost:4000';
 
 export const api = apiBase + '/api';
 const users = apiBase + '/users'

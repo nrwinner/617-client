@@ -1,3 +1,5 @@
+@import 'src/_vars.scss';
+
 .user-card {
     display: flex;
     background: white;
@@ -6,10 +8,100 @@
     box-sizing: border-box;
     align-items: center;
     box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+
+    .user-card-status {
+        position: absolute;
+        top: 0; left: 0;
+        width: 40px;
+        height: 40px;
+        transform: rotate(45deg);
+        top: -20px;
+        left: -20px;
+        box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
+
+        &.accepted {
+            background: linear-gradient(0deg, $green, lighten($green, 10));
+        }
+
+        &.pending {
+            background: linear-gradient(0deg, #ebad0f, lighten(#ebad0f, 10));;
+        }
+    }
+
+    .user-card-delete {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        transition: all 0.1s ease;
+        cursor: pointer;
+
+        &:hover {
+            color: $red;
+        }
+    }
+
+    &.selected {
+
+        &:after {
+            content: '';
+            background: $green;
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            right: 10px;
+            bottom: 10px;
+            opacity: 0.9;
+            border-radius: 50%;
+        }
+
+        &:before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Pro';
+            color: white;
+            position: absolute;
+            right: 15px;
+            bottom: 14px;
+            font-size: 20px;
+            z-index: 2;
+        }
+    }
+
+    &.new {
+        background: linear-gradient(45deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.04));
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: rgba(0, 0, 0, 0.4); 
+
+        &:before {
+            content: '\f067';
+            font-family: 'Font Awesome 5 Pro';
+            font-size: 40px;
+        }
+
+        &:after {
+            content: 'Add User';
+            margin-top: 10px;
+        }
+    }
+
+    &:not(.admin) {
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(1.005);
+            box-shadow: 0px 4px 15px 2px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+    }
 
     .user-card-image {
         border-radius: 50%;
-        width: 70px;
+        width: 60px;
         background: url(https://i1.wp.com/grueneroadpharmacy.com/wp-content/uploads/2017/02/user-placeholder-1.jpg?ssl=1);
         background-size: cover;
         background-position: center;
@@ -20,6 +112,11 @@
             display: block;
             padding-top: 100%;
         }
+    }
+
+    .user-card-email {
+        font-size: 14px;
+        color: $dark-text;
     }
 
     .user-card-name {

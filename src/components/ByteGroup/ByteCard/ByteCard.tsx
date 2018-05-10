@@ -18,8 +18,11 @@ const ByteCard = (
                     Completed!
                 </div> }
                 { admin && <div className="byte-admin-popover">
-                    <Link to={'/byte/' + byte.id}> <div className="byte-nav" /></Link>
-                    <div className="byte-remove" onClick={() => deleteResponder ? deleteResponder(byte.id) : undefined}/>
+                    <div className="byte-admin-popover-options">
+                        <Link to={'/byte/' + byte.id}> <div className="byte-nav" /></Link>
+                        <div className="byte-remove" onClick={() => deleteResponder ? deleteResponder(byte.id) : undefined}/>
+                    </div>
+                    <div className="byte-admin-popover-title">Admin Options</div>
                 </div> }
             </div>
         )

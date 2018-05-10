@@ -23,6 +23,10 @@
         }
     }
 
+    &.showOwn {
+        padding-left: 25px;
+    }
+
     .table-element {
         display: flex;
         flex-direction: row;
@@ -31,6 +35,18 @@
         font-size: 14px;
         position: relative;
         cursor: pointer;
+
+        &.own {
+
+            &:before {
+                content: '\f007';
+                position: absolute;
+                font-family: 'Font Awesome 5 Pro';
+                font-weight: bold;
+                color: $dark-text;
+                left: -25px;
+            }
+        }
     
         .table-name {
             color: $highlight;

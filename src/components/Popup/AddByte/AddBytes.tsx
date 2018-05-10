@@ -76,22 +76,25 @@ class AddBytes extends React.Component<Props> {
             return ( <Loader text={'Loading bytes...'} /> );
         } else {
             if (this.state.data.bytes.length) {
-                let unused = this.state.data.bytes.filter((b: ByteType) => !this.props.data.checked.map((x: any) => x.id).includes(b.id));
-                return (
-                    <div className="add-bytes">
-                        <div className="popup-title">Add Bytes</div>
-                        <div className="add-bytes-results">
-                            { unused.map((b: ByteType) => {
-                                return (
-                                    <ByteCard selected={this.state.selected.includes(b.id)} byte={b} clickHandler={this.select} />   
-                                )
-                            }) }
+                let unused = this.state.data.bytes.filter((b: ByteType) => !this.props.data.checked.includes(b.id));
+                
+                if (unused.length) {
+                    return (
+                        <div className="add-bytes">
+                            <div className="popup-title">Add Bytes</div>
+                            <div className="add-bytes-results">
+                                { unused.map((b: ByteType) => {
+                                    return (
+                                        <ByteCard selected={this.state.selected.includes(b.id)} byte={b} clickHandler={this.select} />   
+                                    )
+                                }) }
+                            </div>
+                            <div className="btn-group">
+                                <div className="button" onClick={() => this.props.data.respond(this.state.selected)}>Add Bytes</div>
+                            </div>
                         </div>
-                        <div className="btn-group">
-                            <div className="button" onClick={() => this.props.data.respond(this.state.selected)}>Add Bytes</div>
-                        </div>
-                    </div>
-                )
+                    )
+                }
             }
 
             return (

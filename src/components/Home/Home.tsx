@@ -173,7 +173,7 @@ class Home extends UserInjector<{ props: Props }> {
                     <Invitations invitations={data.invitations} clickHandler={this.invitationClickHandler} />
                   </DashCard>
                   <DashCard title={'Tables'}>
-                    <Tables tables={data.tables} />
+                    <Tables tables={data.tables} uid={this.props.user.id} />
                   </DashCard>
                 </div>
               </div>

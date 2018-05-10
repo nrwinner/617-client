@@ -18,6 +18,7 @@ export interface UserType {
     bytesCompleted?: ByteType[];
     tables?: TableType[];
     invitations?: TableType[];
+    status?: boolean;
 }
 
 export interface VideoType {
