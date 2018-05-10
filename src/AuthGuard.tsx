@@ -38,11 +38,18 @@ class AuthGuard extends React.Component<{component: JSX.Element, currentUser: Us
 
     componentWillReceiveProps(nextProps: any) {
         if (nextProps.currentUser) {
-            this.setState((state: State) =>  ({
-                queryFinished: true,
-                currentUser: nextProps.currentUser,
-                component: React.cloneElement(nextProps.component, { user: nextProps.currentUser })
-            }));
+            if (new Cookies().get('presence') ? true : false) {
+                this.setState((state: State) => ({
+                    queryFinished: true,
+                    currentUser: nextProps.currentUser,
+                    component: React.cloneElement(nextProps.component, { user: nextProps.currentUser })
+                }));
+            } else {
+                this.setState({
+                    queryFinished: true,
+                    component: undefined
+                })
+            }
         } else if (nextProps.component) {
             this.setState({
                 currentUser: this.props.currentUser || undefined,

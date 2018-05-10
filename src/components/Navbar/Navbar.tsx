@@ -18,7 +18,7 @@ class Navbar extends UserInjector<{}> {
     }
 
     removeCookie() {
-        new Cookies().remove('presence', { path: '/', secure: true});
+        new Cookies().remove('presence', { path: '/'});
         this.props.logout();
     }
 
