@@ -34,4 +34,9 @@ body {
       background: white;
       color: $highlight;
   }
+
+  &.disabled {
+    background: lighten($dark-text, 50);
+    pointer-events: none;
+  }
 }

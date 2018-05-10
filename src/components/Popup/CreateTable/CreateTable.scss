@@ -1,0 +1,25 @@
+@import 'src/_vars.scss';
+
+input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    padding: 12px;
+    font-size: 17px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-top: 30px;
+    outline: none;
+    color: $dark-text;
+
+    &:focus {
+        border-color: $highlight;
+    }
+}
+
+.btn-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}

@@ -1,4 +1,5 @@
 import * as React from 'react';
+// @ts-ignore
 import { Link } from 'react-router-dom';
 import './Invitations.scss';
 import { TableType } from '../../../../types';
@@ -6,7 +7,7 @@ import { TableType } from '../../../../types';
 const Invitations = ({ invitations, clickHandler }: { invitations: TableType[], clickHandler?: Function }) => {
     return (
         <div className="invitations-container">
-            <div className="dash-card-badge">{ invitations.length }</div>
+            {/* <div className="dash-card-badge">{ invitations.length }</div> */}
             { invitations && invitations.length > 0 && invitations.map((i: any, index: number) => {
                 // FIXME: Should link to the table
                 return (

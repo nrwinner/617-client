@@ -4,6 +4,7 @@ import './Popup.scss';
 import AddMembers from './AddMembers/AddMembers'
 import TableInvitation from './TableInvitation/TableInvitation';
 import AddBytes from './AddByte/AddBytes';
+import CreateTable from './CreateTable/CreateTable';
 
 type Props = {
     type: string;
@@ -17,7 +18,7 @@ type State = {
 }
 
 const types = [
-    'ADD_MEMBER', 'TABLE_INVITATION', 'ADD_BYTES'
+    'ADD_MEMBER', 'TABLE_INVITATION', 'ADD_BYTES', 'CREATE_TABLE'
 ]
 
 class Popup extends React.Component<Props> {
@@ -34,7 +35,6 @@ class Popup extends React.Component<Props> {
     }
 
     componentWillReceiveProps(nextProps: any) {
-        console.log('NEXT POPUP PROPS', nextProps);
         if (typeof nextProps.open !== 'undefined') {
             this.setState({
                 open: nextProps.open
@@ -67,6 +67,10 @@ class Popup extends React.Component<Props> {
 
                         {this.props.type === 'ADD_BYTES' && 
                             <AddBytes data={{respond: this.props.data.respond, checked: this.props.data.checked}} />
+                        }
+
+                        {this.props.type === 'CREATE_TABLE' && 
+                            <CreateTable data={{respond: this.props.data.respond}} />
                         }
                     </div> 
                 </div>

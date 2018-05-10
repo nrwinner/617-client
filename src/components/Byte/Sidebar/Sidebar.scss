@@ -7,4 +7,17 @@
     height: 100vh;
     max-width: 350px;
     min-width: 250px;
+
+    .sidebar-back {
+        padding-left: 20px;
+        padding-top: 20px;
+        cursor: pointer;
+
+        &:before {
+            content: '\f060';
+            font-family: 'Font Awesome 5 Pro';
+            color: white;
+            margin-right: 5px;
+        }
+    }
 }

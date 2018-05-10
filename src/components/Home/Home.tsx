@@ -26,6 +26,7 @@ import ApolloClient from 'apollo-client';
 
 type State = {
   invitationPopup: boolean;
+  createTablePopup: boolean;
   activeInvitation?: TableType;
   queryData?: any;
 }
@@ -79,11 +80,14 @@ class Home extends UserInjector<{ props: Props }> {
 
     this.state = {
       invitationPopup: false,
+      createTablePopup: false,
     }
 
     this.invitationClickHandler = this.invitationClickHandler.bind(this);
     this.invitationResponder = this.invitationResponder.bind(this);
     this.toggleInvitationPopup = this.toggleInvitationPopup.bind(this);
+    this.toggleCreateTablePopup = this.toggleCreateTablePopup.bind(this);
+    this.createTableResponder = this.createTableResponder.bind(this);
   }
 
   invitationClickHandler(t: TableType) {
@@ -145,9 +149,34 @@ class Home extends UserInjector<{ props: Props }> {
     this.toggleInvitationPopup(false);
   }
 
+  async createTableResponder(tableName: string) {
+    if (typeof tableName !== 'undefined') {
+      let q = gql`mutation createTable($name: String!, $hostId: String!) {
+        createTable(name: $name, hostId: $hostId) { id }
+      }`;
+
+      await this.props.client.mutate({mutation: q, variables: {
+        hostId: this.props.user.id,
+        name: tableName
+      }});
+
+      if (this.refetch) {
+        this.refetch();
+      }
+
+      this.toggleCreateTablePopup(false);
+    }
+  }
+
   toggleInvitationPopup(val: boolean) {
     this.setState((state: State) => ({
       invitationPopup: typeof val !== 'undefined' ? val : !state.invitationPopup
+    }));
+  }
+
+  toggleCreateTablePopup(val: boolean) {
+    this.setState((state: State) => ({
+      createTablePopup: typeof val !== 'undefined' ? val : !state.invitationPopup
     }));
   }
 
@@ -166,6 +195,7 @@ class Home extends UserInjector<{ props: Props }> {
           return (
             <div className="home-wrapper">
               <Popup open={this.state.invitationPopup} data={{invitation: this.state.activeInvitation, respond: this.invitationResponder}} type={'TABLE_INVITATION'} close={() => this.toggleInvitationPopup(false)} />
+              <Popup open={this.state.createTablePopup} data={{respond: this.createTableResponder}} type={'CREATE_TABLE'} close={() => this.toggleCreateTablePopup(false)} />
               { this.props.user && <Banner title={'Welcome back, ' + this.props.user.firstname + '!'} text={'We\'re happy you\'re here!'} /> }
               <div className="grid-inner">
                 <div className="home-top-grid">
@@ -173,6 +203,7 @@ class Home extends UserInjector<{ props: Props }> {
                     <Invitations invitations={data.invitations} clickHandler={this.invitationClickHandler} />
                   </DashCard>
                   <DashCard title={'Tables'}>
+                    <div className="new-table-button" onClick={() => this.toggleCreateTablePopup(true)} />
                     <Tables tables={data.tables} uid={this.props.user.id} />
                   </DashCard>
                 </div>
