@@ -122,7 +122,7 @@ class Home extends UserInjector<{ props: Props }> {
             this.refetch();
           }
         } catch (e) {
-          console.log(`Error: ${e}`);
+          console.log(`Caught Error: ${e}`);
         }
       } else {
         // cancel invitation
@@ -141,7 +141,7 @@ class Home extends UserInjector<{ props: Props }> {
             this.refetch();
           }
         } catch (e) {
-          console.log(`Error: ${e}`);
+          console.log(`Caught Error: ${e}`);
         }
       }
     }

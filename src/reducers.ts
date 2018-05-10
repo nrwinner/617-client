@@ -96,14 +96,12 @@ function assign(state: any) {
 function buildByte(object: any): ByteType {
     let b: ByteType;
 
-    console.log(object);
-
     let sections: Map<string, SectionType> = new Map(object.sections.map((s: any) => {
         let b = Object.assign({}, s);
         b.questions = new Map(s.questions.map((v: any, i: string) => {
             let c = Object.assign({}, v);
             c.options = new Map(v.options.map((o: any) => {
-                return [o.id, o.text]
+                return [o.id, o.text];
             }));
             c.id = i.toString();
             return [c.id, c];

@@ -41,8 +41,6 @@ class Sections extends React.Component<Props> {
                             available = true;
                         }
 
-                        console.log()
-
                         return <SectionItem data={v} key={i.toString()} available={available} active={this.props.active === v.id} changeSection={this.props.changeSection} />
                     })
                 }

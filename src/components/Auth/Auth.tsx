@@ -28,7 +28,7 @@ class AuthComponent extends React.Component<{ setUser: Function } > {
             history.push('/home');
         }, error => {
             alert('An error occured!');
-            console.log(`Error: ${error}`)
+            console.log(`Caught Error: ${error}`)
         })
     }
 
@@ -38,7 +38,7 @@ class AuthComponent extends React.Component<{ setUser: Function } > {
             history.push('/home');
         }, error => {
             alert('An error occured!');
-            console.log(`Error: ${error}`)
+            console.log(`Caught Error: ${error}`)
         })
     } 
     

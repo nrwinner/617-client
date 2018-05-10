@@ -11,7 +11,6 @@ type Props = {
 }
 
 const SectionHeader = (props: Props) => {
-    console.log('test', props);
     return (
         <div>
             <div className="section-header">
