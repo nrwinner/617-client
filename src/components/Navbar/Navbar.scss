@@ -1,53 +1,77 @@
 @import 'src/_vars.scss';
-
 .navbar {
-    height: 60px;
-    padding: 10px 0px;
+  height: 60px;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  background: white;
+  color: $dark-text;
+  z-index: 10;
+  position: relative;
+  .grid-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0px 20px;
     box-sizing: border-box;
-    box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.2);
-    background: white;
-    color: $dark-text;
-    z-index: 10;
-    position: relative;
-
-    .grid-inner {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        height: 100%;
-        padding: 0px 20px;
-        box-sizing: border-box;
+  }
+  .navbar-title {
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    align-items: center;
+    cursor: pointer;
+    .navbar-logo {
+      mask: url('../../assets/images/logo.svg') no-repeat center;
+      -webkit-mask: url('../../assets/images/logo.svg') no-repeat center;
+      background: $highlight-gradient;
+      width: 30px;
+      height: 100%;
+      transform: rotate(45deg);
+      margin-right: 5px;
     }
-
-    .navbar-title {
-        font-size: 24px;
-        font-weight: bold;
-        display: flex;
-        flex-direction: row;
-        height: 100%;
-        align-items: center;
+  }
+  .right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    &>*:not(:first-child) {
+      margin-left: 10px;
+    }
+    .logout {
+      background-color: transparent;
+      border: 0;
+      color: $highlight;
+      animation: text-decoration 2s;
+      font-size: 14px;
+      &:hover {
         cursor: pointer;
-
-
-        .navbar-logo {
-            mask: url('../../assets/images/logo.svg') no-repeat center;
-            -webkit-mask: url('../../assets/images/logo.svg') no-repeat center;
-            background: $highlight-gradient;
-            width: 30px;
-            height: 100%;
-            transform: rotate(45deg);
-            margin-right: 5px;
-        }
+        text-decoration: underline;
+      }
     }
-
-    .right {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-
-        & > *:not(:first-child) {
-            margin-left: 10px;
-        }
+    .greeting {
+      display: flex;
+      flex-flow: column nowrap;
+      align-self: center;
+      font-size: 14px;
+      margin-right: 5px;
+      color: lighten($dark-text, 20);
     }
+    .divider {
+      border-left: 2px solid lighten($dark-text, 50);
+      height: 25px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-self: center;
+      margin-left: 15px;
+    }
+    .avatar {
+      height: 40px;
+      border-radius: 25px;
+    }
+  }
 }

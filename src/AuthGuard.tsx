@@ -27,15 +27,38 @@ class AuthGuard extends React.Component<{component: JSX.Element, currentUser: Us
             queryFinished: false,
             hasCookie: new Cookies().get('presence') ? true : false,
             component: undefined
-        }
+        };
+
+        this.check = this.check.bind(this);
     }
 
     componentDidMount() {
+        this.check();
+    }
+
+    componentWillReceiveProps(nextProps: any) {
+        if (nextProps.currentUser) {
+            this.setState((state: State) =>  ({
+                queryFinished: true,
+                currentUser: nextProps.currentUser,
+                component: React.cloneElement(nextProps.component, { user: nextProps.currentUser })
+            }));
+        } else if (nextProps.component) {
+            this.setState({
+                currentUser: this.props.currentUser || undefined,
+                queryFinished: false,
+                hasCookie: new Cookies().get('presence') ? true : false,
+                component: undefined
+            }, () => this.check());
+        }
+    }
+
+    check() {
         if (!this.state.component) {
             if (this.state.hasCookie) {
-                axios.get(routes.validateToken, {withCredentials: true}).then(res => {
-                  let u = res.data as UserType;
-                  this.props.setUser({ id: u.id, firstname: u.firstname, lastname: u.lastname, email: u.email });
+                axios.get(routes.validateToken, { withCredentials: true }).then(res => {
+                    let u = res.data as UserType;
+                    this.props.setUser({ id: u.id, firstname: u.firstname, lastname: u.lastname, email: u.email });
                 }, (error) => {
                     // do nothing, bad token
                     this.setState({
@@ -48,19 +71,9 @@ class AuthGuard extends React.Component<{component: JSX.Element, currentUser: Us
                 })
             }
         } else {
-            this.setState((state: State) =>  ({
+            this.setState((state: State) => ({
                 queryFinished: true,
                 component: React.cloneElement(this.props.component, { user: state.currentUser })
-            }));
-        }
-    }
-
-    componentWillReceiveProps(nextProps: any) {
-        if (nextProps.currentUser) {
-            this.setState((state: State) =>  ({
-                queryFinished: true,
-                currentUser: nextProps.currentUser,
-                component: React.cloneElement(nextProps.component, { user: nextProps.currentUser })
             }));
         }
     }

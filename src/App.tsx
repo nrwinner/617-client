@@ -26,7 +26,7 @@ class App extends React.Component<any, any> {
           <div>
             <Switch>
               <Route path="/home" render={(props: any) => <AuthGuard component={<Home />} /> } />
-              <Route path="/table/:id" render={(props: any) => <Table {...props} />} />
+              <Route path="/table/:id" render={(props: any) => <AuthGuard component={<Table {...props} />} />} />
               <Route path="/byte/:id" render={(props: any) => <AuthGuard component={<Byte {...props} />} />} />
               <Route path="/auth" render={(props: any) => <AuthComponent />} />
               {/* Catch all */}
