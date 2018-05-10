@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import UserGroup from '../UserGroup/UserGroup';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { Loader } from '@/components//Loader/Loader';
+import { Loader } from '../Loader/Loader';
 import { withApollo } from 'react-apollo';
 import ApolloClient from 'apollo-client/ApolloClient';
 
@@ -95,6 +95,7 @@ class Table extends React.Component<Props> {
 
     this.state = {
       addMembersPopup: false,
+      addBytesPopup: false,
       mode: true,
       tableID: id
     }

@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Loader } from '@/components/Loader/Loader';
+import { Loader } from '../../Loader/Loader';
 import { ByteType } from '@/types';
 import { withApollo } from 'react-apollo';
 import ApolloClient from 'apollo-client';
 import gql from 'graphql-tag';
 import './AddBytes.scss';
 
-import ByteCard from '@/components/ByteGroup/ByteCard/Bytecard';
+import ByteCard from '../../ByteGroup/ByteCard/ByteCard';
 
 type Props = {
     data: {respond: Function, checked: string[]}
