@@ -96,8 +96,8 @@ class AddMembers extends React.Component<Props> {
             }
 
             return (
-                <div className="add-bytes">
-                    <div className="popup-title">Add Bytes</div>
+                <div className="add-users">
+                    <div className="popup-title">Add Users</div>
                     <div className="none">No more users to add!</div>
                 </div>
             )

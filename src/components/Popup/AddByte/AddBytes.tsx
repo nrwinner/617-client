@@ -75,7 +75,7 @@ class AddBytes extends React.Component<Props> {
         if (!this.state || !this.state.data) {
             return ( <Loader text={'Loading bytes...'} /> );
         } else {
-            if (this.state.data.bytes.length) {
+            if (this.state.data.bytes && this.state.data.bytes.length) {
                 let unused = this.state.data.bytes.filter((b: ByteType) => !this.props.data.checked.includes(b.id));
                 
                 if (unused.length) {
