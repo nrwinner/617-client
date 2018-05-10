@@ -5,11 +5,10 @@ import { TableType } from '../../../../types';
 import { Link } from 'react-router-dom';
 
 const Tables = ({ tables, uid }: { tables: TableType[], uid: string }) => {
-    let showOwn = tables.map((t: TableType) => t.owner.id).includes(uid);
+    let showOwn = tables && tables.length && tables.map((t: TableType) => t.owner.id).includes(uid);
     return (
         <div className={'tables-container ' + (showOwn ? 'showOwn ' : '')}>
             { tables && tables.length && tables.map((i: any, index: number) => {
-                    // FIXME: Should link to the table
                     return (
                         <Link to={'/table/' + i.id}>
                             <div className={'table-element ' + (i.owner.id === uid ? 'own ' : '')} key={index}>

@@ -21,10 +21,6 @@ type Props = {
 
 class Sidebar extends React.Component<Props> {
 
-    componentWillReceiveProps(nextProps: any) {
-        console.log('NEXT PROPS IN SIDEBAR', nextProps);
-    }
-
     render() {
         return (
             <div className='sidebar'>

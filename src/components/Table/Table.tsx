@@ -117,33 +117,44 @@ class Table extends React.Component<Props> {
   }
 
   async performQuery(userId: string) {
-    try {
-      const { data }: { data: any } = await this.props.client.query({query: this.query, fetchPolicy: 'no-cache', variables: {tableId: this.state.tableID, userId}});
+    
+      const { data }: { data: any } =
+        await this.props.client.query(
+          {query: this.query, fetchPolicy: 'no-cache', variables: {tableId: this.state.tableID, userId}}
+        );
 
       // process data
       let owned = data.table.owner.id === userId;
       
       if (data.user.bytesCompleted && data.user.bytesCompleted.length) {
         this.completed = data.user.bytesCompleted.map((b: ByteType) => b.id);
-        let b: ByteType = this.getNextByte(data.table.bytes, this.completed);
+        
+        if (data.user.bytes && data.user.bytes.length) {
+          let b: ByteType = this.getNextByte(data.table.bytes, this.completed);
 
-        this.setState({
-          nextByte: b
-        })
+          this.setState({
+            nextByte: b
+          });
+        }
       }
 
-      let members = data.table.members.map((u: UserType) => Object.assign({}, u, {status: true}))
-      let invitations = data.table.invitations.map((u: UserType) => Object.assign({}, u, {status: false}))
+      let members = 
+        data.table.members && data.table.members.length ?
+          data.table.members.map((u: UserType) => Object.assign({}, u, {status: true})) :
+          [];
+
+      let invitations = 
+        data.table.invitations && data.table.invitations.length ? 
+          data.table.invitations.map((u: UserType) => Object.assign({}, u, {status: false})) :
+          [];
 
       this.setState({
         data,
         members, 
         invitations,
         owned,
-      })
-    } catch (e) {
-      console.log(`Error: ${e}`);
-    }
+      });
+    
   }
 
   componentWillReceiveProps(nextProps: any) {
@@ -168,7 +179,7 @@ class Table extends React.Component<Props> {
   toggleAddMembersPopup(val?: boolean) {
     this.setState((state: State) => ({
       addMembersPopup: typeof val !== 'undefined' ? val : !state.addMembersPopup
-    }))
+    }));
   }
 
   /**
@@ -280,12 +291,11 @@ class Table extends React.Component<Props> {
         return <Loader text="Loading table..." />;
       } else {
         let data = this.state.data;
-        // @ts-ignore
-        let members = ([]).concat(this.state.members).concat(this.state.invitations);
+        let members = [...this.state.members || [], ...this.state.invitations || []];
         return (
           <div>
             <Popup open={this.state.addMembersPopup} data={{respond: this.addMembers, checked: members.map((m: any) => m.id)}} type="ADD_MEMBERS" close={this.toggleAddMembersPopup} />
-            <Popup open={this.state.addBytesPopup} data={{respond: this.addBytes, checked: data.table.bytes.map((b: any) => b.id)}} type="ADD_BYTES" close={this.toggleAddBytesPopup} />
+            <Popup open={this.state.addBytesPopup} data={{respond: this.addBytes, checked: data.table.bytes ? data.table.bytes.map((b: any) => b.id) : []}} type="ADD_BYTES" close={this.toggleAddBytesPopup} />
             <div className='table'>
               { this.state.nextByte && 
               <div className="grid-inner nextByte">
@@ -308,7 +318,7 @@ class Table extends React.Component<Props> {
               </div>
               <div className="grid-inner">
                 { this.state.mode && <div className="table-bytes">
-                  <ByteGroup collection={true} admin={this.state.owned} bytes={data.table.bytes} deleteResponder={this.removeByte} completed={this.completed} adminClickHandler={() => this.toggleAddBytesPopup(true)}  />
+                  <ByteGroup collection={true} admin={this.state.owned} bytes={data.table.bytes || []} deleteResponder={this.removeByte} completed={this.completed} adminClickHandler={() => this.toggleAddBytesPopup(true)}  />
                 </div> }
                 { !this.state.mode && <div className="table-users">
                   <UserGroup admin={this.state.owned} users={members} deleteResponder={this.removeUser} adminClickHandler={() => this.toggleAddMembersPopup(true)} />
