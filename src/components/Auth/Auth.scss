@@ -43,7 +43,13 @@
 
     .form {
         max-width: 400px;
-        margin-top: 40px;
+        margin-top: 50px;
+
+        .error {
+            position: absolute;
+            color: $red;
+            margin-top: -30px;
+        }
 
         input {
             outline: 0;
