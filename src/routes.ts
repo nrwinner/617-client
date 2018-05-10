@@ -1,4 +1,4 @@
-const apiBase = 'http://localhost:4000';
+const apiBase = '';
 
 export const api = apiBase + '/api';
 const users = apiBase + '/users'
