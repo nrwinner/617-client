@@ -16,7 +16,7 @@ import { UserType } from '../../types';
 type State = {
     loginError?: string;
     registerError?: string;
-}
+};
 
 class AuthComponent extends React.Component<{ setUser: Function } > {
     state: State;
@@ -31,25 +31,26 @@ class AuthComponent extends React.Component<{ setUser: Function } > {
     }
 
     login({ email, password }: { email: string, password: string }) {
-        axios.post(routes.login, { email, password }, { withCredentials: true }).then(res => {
-            this.props.setUser(res.data as UserType);
-            history.push('/home');
-        }, error => {
-            this.setState({
-                loginError: 'Incorrect username/password!'
+        axios.post(routes.login, { email, password }, { withCredentials: true })
+            .then(res => {
+                this.props.setUser(res.data as UserType);
+                history.push('/home');
+            },    error => {
+                this.setState({
+                    loginError: 'Incorrect username/password!'
+                });
             });
-        })
     }
 
     register({ firstname, lastname, email, password }: { firstname: string, lastname: string, email: string, password: string }) {
         axios.post( routes.register, {firstname, lastname, email, password } , { withCredentials: true } ).then(res => {
             this.props.setUser(res.data as UserType);
             history.push('/home');
-        }, error => {
+        },                                                                                                      error => {
             this.setState({
                 registerError: 'An error occured!'
             });
-        })
+        });
     } 
     
     render() {
@@ -65,12 +66,12 @@ class AuthComponent extends React.Component<{ setUser: Function } > {
                     </div>
                 </Router>
             </div>
-        )
+        );
     }
 }
 
 const mapDispatchToProps = (dispatch: any) => ({
     setUser: (p: string[]) => dispatch(initUser({...p}))
-})
+});
 
 export default connect(null, mapDispatchToProps)(AuthComponent);

@@ -10,10 +10,10 @@ import history from './history';
 import Navbar from './components/Navbar/Navbar';
 import AuthGuard from './AuthGuard';
 
-
 class App extends React.Component<any, any> {
 
   constructor(props: any) {
+    console.log('APP:', props);
     super(props);
     
   }
@@ -25,7 +25,7 @@ class App extends React.Component<any, any> {
         <Router history={history}>
           <div>
             <Switch>
-              <Route path="/home" render={(props: any) => <AuthGuard component={<Home />} /> } />
+              <Route path="/home" render={(props: any) => <AuthGuard component={<Home />} />} />
               <Route path="/table/:id" render={(props: any) => <AuthGuard component={<Table {...props} />} />} />
               <Route path="/byte/:id" render={(props: any) => <AuthGuard component={<Byte {...props} />} />} />
               <Route path="/auth" render={(props: any) => <AuthComponent />} />

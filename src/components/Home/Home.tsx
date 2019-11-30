@@ -19,8 +19,6 @@ import './Home.scss';
 // Apollo
 import { Query, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
-
-
 import Popup from '../../components/Popup/Popup';
 import ApolloClient from 'apollo-client';
 
@@ -29,12 +27,12 @@ type State = {
   createTablePopup: boolean;
   activeInvitation?: TableType;
   queryData?: any;
-}
+};
 
 type Props = {
   client: ApolloClient<any>;
   [propName: string]: any;
-}
+};
 
 class Home extends UserInjector<{ props: Props }> {
   refetch?: Function;
@@ -81,7 +79,7 @@ class Home extends UserInjector<{ props: Props }> {
     this.state = {
       invitationPopup: false,
       createTablePopup: false,
-    }
+    };
 
     this.invitationClickHandler = this.invitationClickHandler.bind(this);
     this.invitationResponder = this.invitationResponder.bind(this);
@@ -94,7 +92,7 @@ class Home extends UserInjector<{ props: Props }> {
     if (t) {
       this.setState({
         activeInvitation: t
-      }, () => {
+      },            () => {
         this.toggleInvitationPopup(true);
       });
     } else {
@@ -106,7 +104,7 @@ class Home extends UserInjector<{ props: Props }> {
     if (typeof accept !== 'undefined') {
 
       if (accept) {
-        //accept invitation
+        // accept invitation
         let q = gql`mutation joinTable($tableId: String!, $userId: String!) {
           joinTable(tableId: $tableId, userId: $userId)
         }`;
@@ -182,21 +180,38 @@ class Home extends UserInjector<{ props: Props }> {
 
   render() {
     let id = this.props.user ? this.props.user.id : '';
+    console.log(this.props);
 
     return (
       <Query query={this.query} variables={{id}}>
         {({ loading, error, data, refetch }) => {
-          if (loading) return <Loader text="Loading user..." />;
-          if (error) return <p>Error :( {error}</p>;
+          if (loading) { return <Loader text="Loading user..." />; }
+          if (error) { return <p>Error :( {error}</p>; }
 
           data = data.user;
           this.refetch = refetch;
 
           return (
             <div className="home-wrapper">
-              <Popup open={this.state.invitationPopup} data={{invitation: this.state.activeInvitation, respond: this.invitationResponder}} type={'TABLE_INVITATION'} close={() => this.toggleInvitationPopup(false)} />
-              <Popup open={this.state.createTablePopup} data={{respond: this.createTableResponder}} type={'CREATE_TABLE'} close={() => this.toggleCreateTablePopup(false)} />
-              { this.props.user && <Banner title={'Welcome back, ' + this.props.user.firstname + '!'} text={'We\'re happy you\'re here!'} /> }
+              <Popup 
+                open={this.state.invitationPopup}
+                data={{invitation: this.state.activeInvitation, respond: this.invitationResponder}}
+                type={'TABLE_INVITATION'}
+                close={() => this.toggleInvitationPopup(false)}
+              />
+              <Popup 
+                open={this.state.createTablePopup}
+                data={{respond: this.createTableResponder}} 
+                type={'CREATE_TABLE'}
+                close={() => this.toggleCreateTablePopup(false)}
+              />
+              {
+                this.props.user && 
+                  <Banner 
+                    title={'Welcome back, ' + this.props.user.firstname + '!'}
+                    text={'We\'re happy you\'re here!'}
+                  />
+              }
               <div className="grid-inner">
                 <div className="home-top-grid">
                   <DashCard title={'Invitations'}>
@@ -204,7 +219,10 @@ class Home extends UserInjector<{ props: Props }> {
                   </DashCard>
                   <DashCard title={'Tables'}>
                     <div className="new-table-button" onClick={() => this.toggleCreateTablePopup(true)} />
-                    <Tables tables={data.tables} uid={this.props.user.id} />
+                    <Tables
+                      tables={data.tables}
+                      uid={this.props.user.id}
+                    />
                   </DashCard>
                 </div>
               </div>
@@ -215,7 +233,5 @@ class Home extends UserInjector<{ props: Props }> {
     );
   }
 }
-
-  
 
 export default withApollo(Home);
